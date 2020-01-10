@@ -18,7 +18,7 @@ class Event(models.Model):
     number. We could implement a new model instead.
 
     Attributes:
-        _name (str): This model technical name
+        _name (str): This model technical name (agenda_esi.event)
         _sql_constraints (list of triples): This model sql constraints
         PERIODICITY_OPTIONS (list of pairs): Options are dayly, weekly, montly
         CLASS_ROOM_LIMIT (integer): The classroom limit number (not included)
@@ -46,10 +46,6 @@ class Event(models.Model):
     end_datetime = fields.Datetime()
     classroom = fields.Integer()
     capacity = fields.Integer()
-
-    # TODO: should they have the matching role? E.g. Can a student organize an
-    # event in a pedagogic agenda?
-    # organizer = fields.Many2One 
 
     # TODO: the attendees of an event should be members of an event agenda.
     # attendees = fields.Many2One
