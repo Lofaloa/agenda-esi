@@ -32,6 +32,7 @@ class Agenda(models.Model):
         required=False,
         ondelete='restrict')
 
+    # TODO: the organizer should not be able to be a member
     members = fields.Many2many(
         comodel_name='res.partner',
         required=False,

@@ -36,7 +36,8 @@ class Event(models.Model):
         ('d', 'Dayly'),
         ('w', 'Weekly'),
         ('m', 'Monthly'),
-        ('u', 'None')]
+        ('u', 'None')
+    ]
 
     CLASS_ROOM_LIMIT = 1000
 
