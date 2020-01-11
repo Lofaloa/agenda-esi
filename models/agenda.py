@@ -23,7 +23,7 @@ class Agenda(models.Model):
 
     _name = 'agenda_esi.agenda'
 
-    title = fields.Text(required=True)
+    title = fields.Char(required=True)
 
     # TODO: should they have the matching role? E.g. Can a student organize an
     # event in a pedagogic agenda?

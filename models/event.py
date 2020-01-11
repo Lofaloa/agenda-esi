@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+from datetime import timedelta
+
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
@@ -30,6 +33,11 @@ class Event(models.Model):
         capacity (odoo.fields.Integer): The number of available seats
     """
 
+    @api.model
+    def _get_default_end_time(self):
+        default_end_datetime = datetime.now() + timedelta(hours=2)
+        return fields.Datetime.to_string(default_end_datetime)
+
     _name = 'agenda_esi.event'
 
     PERIODICITY_OPTIONS = [
@@ -41,12 +49,12 @@ class Event(models.Model):
 
     CLASS_ROOM_LIMIT = 1000
 
-    title = fields.Text()
-    periodicity = fields.Selection(selection=PERIODICITY_OPTIONS)
-    start_datetime = fields.Datetime()
-    end_datetime = fields.Datetime()
+    title = fields.Char()
+    periodicity = fields.Selection(selection=PERIODICITY_OPTIONS, default='u')
+    start_datetime = fields.Datetime(default=fields.Datetime.now())
+    end_datetime = fields.Datetime(default=_get_default_end_time)
     classroom = fields.Integer()
-    capacity = fields.Integer()
+    capacity = fields.Integer(default=1, required=False)
 
     # TODO: the attendees of an event should be members of an event agenda.
     # attendees = fields.Many2One
@@ -57,8 +65,8 @@ class Event(models.Model):
         """
         for record in self:
             if not record.title:
-                    msg = """Invalid event title! The event title should not be
-                    blank should start before it ends."""
+                    msg = """Invalid event title! The event title should not be\
+                    blank."""
                     raise ValidationError(msg)
 
     @api.constrains('start_datetime', 'end_datetime')
@@ -88,6 +96,6 @@ class Event(models.Model):
         """
         for record in self:
             if record.capacity < 1:
-                msg = """Invalid event capacity! It should be greater than or
+                msg = """Invalid event capacity! It should be greater than or\
                 equal to 1."""
                 raise ValidationError(msg)
