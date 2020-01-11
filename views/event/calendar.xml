@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- TODO: show all the events of a specific angenda instead (not all of them) -->
+	<record model="ir.ui.view" id="agenda_calendar_view">
+        <field name="name">agenda.calendar</field>
+        <field name="model">agenda_esi.event</field>
+        <field name="arch" type="xml">
+            <calendar 
+                string="Calendar"
+                date_start="start_datetime"
+                date_stop="end_datetime"
+                mode="month">
+                
+                <field name="title"/>
+                <field name="classroom"/>
+                <field name="capacity"/>
+            
+            </calendar>
+        </field>
+    </record>
+
+</odoo>

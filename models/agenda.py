@@ -15,6 +15,7 @@ class Agenda(models.Model):
 
     Attributes:
         _name (str): This model technical name (agenda_esi.agenda)
+        title (odoo.fields.Text): The title of this agenda
         organizer (odoo.fields.Many2One): The partner who organizes this agenda
         events (odoo.fields.Many2One): The set of organized events
         members (odoo.fields.Many2One): The set of an angenda members
@@ -22,12 +23,16 @@ class Agenda(models.Model):
 
     _name = 'agenda_esi.agenda'
 
+    title = fields.Text(required=True)
+
     # TODO: should they have the matching role? E.g. Can a student organize an
     # event in a pedagogic agenda?
     organizer = fields.Many2one(
         comodel_name='res.partner',
         required=True,
-        ondelete='set null')
+        ondelete='set null',
+        default=lambda self: self.env.user.partner_id,
+        readonly=True)
 
     events = fields.Many2many(
         comodel_name='agenda_esi.event',

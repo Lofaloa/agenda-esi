@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Overrides the default event tree to show the event title and 
+    classroom -->
+    <record model="ir.ui.view" id="event_tree_view">
+        <field name="name">event.tree</field>
+        <field name="model">agenda_esi.event</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title"/>
+                <field name="classroom"/>
+            </tree>
+        </field>
+    </record>
+    
+</odoo>

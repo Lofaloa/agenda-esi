@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Overrides the default agenda tree to show the agenda title and its
+    organizer -->
+    <record model="ir.ui.view" id="agenda_tree_view">
+        <field name="name">agenda.tree</field>
+        <field name="model">agenda_esi.agenda</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title"/>
+                <field name="organizer"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
