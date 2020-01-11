@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from .esi_partner import EsiPartner
+
 from odoo import models, fields, api
 
 class Agenda(models.Model):
@@ -36,4 +38,4 @@ class Agenda(models.Model):
     members = fields.Many2many(
         comodel_name='res.partner',
         required=False,
-        ondelete='delete')
+        ondelete='set null')
