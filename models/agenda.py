@@ -59,11 +59,14 @@ class Agenda(models.Model):
         Note (Logan): I didn't find any documentation concerning Odoo 11. The
         dictionnary entries are based on the Odoo 8 documentation.
 
+        Checkint out the table schema helps too (describe table).
+
         https://www.odoo.com/documentation/8.0/reference/actions.html
         """
         return {
             'type': 'ir.actions.act_window',
-            'name': 'AgendaCalendarAction',
+            'name': 'Agenda Events',
             'view_mode': 'calendar',
+            'res_id': self.id,
             'res_model': 'agenda_esi.event',
         }
