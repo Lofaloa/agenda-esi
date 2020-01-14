@@ -6,6 +6,7 @@
         <field name="name">agenda.calendar</field>
         <field name="model">agenda_esi.event</field>
         <field name="arch" type="xml">
+                
             <calendar 
                 string="Calendar"
                 date_start="start_datetime"

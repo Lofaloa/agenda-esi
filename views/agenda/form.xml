@@ -5,11 +5,13 @@
         <field name="name">agenda.form</field>
         <field name="model">agenda_esi.agenda</field>
         <field name="arch" type="xml">
-            <form string="Agenda Form" >
-                <field name="title"/>
-                <field name="organizer"/>
+            <form>
+                <field name="title" />
+                <field name="organizer" />
+                <field name="members" />
+                <field name="events" />
             </form>
         </field>
     </record>
-
+    
 </odoo>

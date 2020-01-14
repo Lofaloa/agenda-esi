@@ -25,6 +25,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/menus.xml',
+        'views/agenda/form.xml',
         'views/agenda/list.xml',
         'views/event/list.xml',
         'views/event/calendar.xml',
