@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- TODO: show all the events of a specific angenda instead (not all of them) -->
+    <!-- TODO: an authorized user should be able to add an event to the agenda
+    represented by this view. -->
 	<record model="ir.ui.view" id="agenda_calendar_view">
         <field name="name">agenda.calendar</field>
         <field name="model">agenda_esi.event</field>
@@ -11,6 +12,7 @@
                 string="Calendar"
                 date_start="start_datetime"
                 date_stop="end_datetime"
+                quick_add="false"
                 mode="month">
                 
                 <field name="title"/>
