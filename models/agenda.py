@@ -48,13 +48,10 @@ class Agenda(models.Model):
     @api.multi
     def show_calendar_action(self):
         """ Return an action as a dictionnary. The action shows a calendar view
-        that represents all this agenda events.
+        that contains all this agenda events.
 
         This action should be called by the button (Calendar) in the agenda
         list view cell.
-
-        TODO: the action currently shows all events in the database. The domain
-        should be limited to this agenda events.
 
         Note (Logan): I didn't find any documentation concerning Odoo 11. The
         dictionnary entries are based on the Odoo 8 documentation.
@@ -67,6 +64,6 @@ class Agenda(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Agenda Events',
             'view_mode': 'calendar',
-            'res_id': self.id,
             'res_model': 'agenda_esi.event',
+            'domain': [('id', 'in', self.events.ids)]
         }
