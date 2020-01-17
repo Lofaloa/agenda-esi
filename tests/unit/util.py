@@ -10,6 +10,16 @@ def create_event(test, title, periodicity, start, end, classroom, capacity):
         'capacity': capacity
     })
 
+def create_event_with_context(test, context, title, periodicity, start, end, classroom, capacity):
+    return test.env['agenda_esi.event'].with_context(context).create({
+        'title': title,
+        'periodicity': periodicity,
+        'start_datetime': start,
+        'end_datetime': end,
+        'classroom': classroom,
+        'capacity': capacity
+    })
+
 def create_partner(test, name):
     return test.env['res.partner'].create({'name': name})
 
@@ -31,6 +41,10 @@ def assert_event_equal(test, record, title, periodicity, start, end, classroom, 
     test.assertEqual(record.end_datetime, end.__str__())
     test.assertEqual(record.periodicity, periodicity)
     test.assertEqual(record.capacity, capacity)
+
+def assert_agenda_contains(test, agenda, event):
+    matching_events = agenda.events.search([('id', '=', event.id)])
+    test.assertTrue(matching_events.ensure_one())
 
 def assert_agenda_equal(test, record, title, organizer):
     test.assertEqual(record.title, title)
