@@ -80,7 +80,7 @@ class Event(models.Model):
                     raise ValidationError(msg)
 
     @api.constrains('classroom')
-    def _check_capacity(self):
+    def _check_classroom(self):
         """ Makes sures that an event classroom is valid. A valid classroom is
         an positive integer with a value under CLASS_ROOM_LIMIT.
         """
