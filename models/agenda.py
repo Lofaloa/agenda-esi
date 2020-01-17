@@ -3,6 +3,7 @@
 from .esi_partner import EsiPartner
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class Agenda(models.Model):
     """
@@ -44,6 +45,16 @@ class Agenda(models.Model):
         comodel_name='res.partner',
         required=False,
         ondelete='set null')
+
+    @api.constrains('title')
+    def _check_title_is_not_blank(self):
+        """ Makes sure that the title of an agenda isn't blank.
+        """
+        for record in self:
+            if not record.title:
+                    msg = """Invalid agenda title! The event title should not be\
+                    blank."""
+                    raise ValidationError(msg)
 
     @api.multi
     def show_calendar_action(self):
