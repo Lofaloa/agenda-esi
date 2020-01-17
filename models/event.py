@@ -66,7 +66,12 @@ class Event(models.Model):
         required=False,
         ondelete='set null')
 
-    agenda = fields.Many2one(comodel_name="agenda_esi.agenda", required=True)
+    agenda = fields.Many2one(
+        comodel_name="agenda_esi.agenda",
+        required=True,
+        readonly=True,
+        default=lambda self: self.env.context.get('default_agenda_id', False)
+    )
 
     @api.constrains('attendees', 'capacity')
     def _check_attendees_capacity(self):
@@ -143,4 +148,5 @@ class Event(models.Model):
         agenda_id = self.env.context.get('default_agenda_id', False)
         agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
         agenda.write({'events': [(4, event.id)]})
+        self.agenda = agenda_id
         return event
