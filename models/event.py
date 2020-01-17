@@ -2,10 +2,12 @@
 
 from datetime import datetime
 from datetime import timedelta
+import logging
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+_logger = logging.getLogger(__name__)
 
 class Event(models.Model):
     """
@@ -59,14 +61,20 @@ class Event(models.Model):
 
     # TODO: the attendees of an event should be members of an event agenda.
     # attendees = fields.Many2One
+    attendees = fields.Many2many(
+        comodel_name='res.partner',
+        required=False,
+        ondelete='set null')
+
     agenda = fields.Many2one(comodel_name="agenda_esi.agenda", required=True)
 
-    @api.constrains('agenda', 'capacity')
+    @api.constrains('attendees', 'capacity')
     def _check_attendees_capacity(self):
         """The number of attendees should respect the event's capacity."""
-        if len(agenda.members) > capacity:
-            msg = """There are too many attendees registered to this event."""
-            raise ValidationError(msg)
+        for record in self:
+            if len(record.attendees) > record.capacity:
+                msg = """There are too many attendees registered to this event."""
+                raise ValidationError(msg)
 
     @api.constrains('title')
     def _check_title_is_not_blank(self):
