@@ -8,6 +8,13 @@
         <field name="model">agenda_esi.agenda</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button 
+                        string="Go to calendar"
+                        type="object"
+                        name="show_calendar_action"
+                        class="oe_highlight"/>
+                </header>
                 <sheet>
                     <notebook string="Agenda">
                         <page string="Information">

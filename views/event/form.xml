@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record model="ir.ui.view" id="agenda_form_view">
+    <record model="ir.ui.view" id="event_form_view">
         <field name="name">event.form</field>
         <field name="model">agenda_esi.event</field>
         <field name="arch" type="xml">

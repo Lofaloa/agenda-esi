@@ -10,8 +10,6 @@
             <tree>
                 <field name="title"/>
                 <field name="organizer"/>
-
-                <!-- Shows a calendar view showing all the agenda events -->
                 <button  string="Calendar" type="object" name="show_calendar_action" class="oe_highlight"/>
             </tree>
         </field>

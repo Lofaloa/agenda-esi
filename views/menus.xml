@@ -45,7 +45,6 @@
         name="Agenda ESI" 
         parent="main_agenda_esi_menu"/>
 
-    <!-- TODO: should show a list of clickable agendas, when clicked, a calendar is open -->
     <menuitem
         id="agenda_menu"
         name="Agendas"
@@ -55,7 +54,7 @@
     <!-- NOTE: useful? The events should be displayed in the a calendar (let it be during dev) -->
     <menuitem
         id="event_menu"
-        name="Events"
+        name="Events (Debug)"
         parent="agenda_esi_menu"
         action="event_list_action"/>
 
