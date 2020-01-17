@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from .esi_partner import EsiPartner
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
 
 class Agenda(models.Model):
     """
@@ -21,6 +25,12 @@ class Agenda(models.Model):
         events (odoo.fields.Many2One): The set of organized events
         members (odoo.fields.Many2One): The set of an angenda members
     """
+
+    @api.model
+    def _is_current_user_member(self):
+        current_user = self.env.user.partner_id
+        records = self.members.filtered(lambda m: m.id == current_user.id)
+        return len(records) == 1
 
     _name = 'agenda_esi.agenda'
 
@@ -45,6 +55,8 @@ class Agenda(models.Model):
         comodel_name='res.partner',
         required=False,
         ondelete='set null')
+
+    is_current_user_member = fields.Boolean(default=_is_current_user_member)
 
     @api.constrains('title')
     def _check_title_is_not_blank(self):
