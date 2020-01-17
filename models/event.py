@@ -99,3 +99,30 @@ class Event(models.Model):
                 msg = """Invalid event capacity! It should be greater than or\
                 equal to 1."""
                 raise ValidationError(msg)
+
+    @api.model
+    def create(self, vals):
+        """ Create a new event with the provided values and associate it with
+        the default agenda.
+
+        The default agenda id can be found in the view context. The value is
+        set in the Agenda Events action (check agenda.py).
+
+        Notes concerning the insertion of a new record to a Many2many field...
+
+        Many2many uses a special “commands” format to manipulate the set of
+        records stored in/associated with the field (check the link below for
+        details). We needed to add an existing record to the agenda events
+        field. Therefore, as described in the documentation, the command is
+        (4, record id to be associated).
+
+        https://www.odoo.com/documentation/11.0/reference/orm.html#model-reference
+
+        TODO: if the default agenda id is not provided, the creation should be
+        aborted.
+        """
+        event = super(Event, self).create(vals)
+        agenda_id = self.env.context.get('default_agenda_id', False)
+        agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
+        agenda.write({'events': [(4, event.id)]})
+        return event
