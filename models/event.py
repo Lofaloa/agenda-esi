@@ -73,7 +73,8 @@ class Event(models.Model):
         """The number of attendees should respect the event's capacity."""
         for record in self:
             if len(record.attendees) > record.capacity:
-                msg = """There are too many attendees registered to this event."""
+                msg = """There are too many attendees registered to this 
+                event."""
                 raise ValidationError(msg)
 
     @api.constrains('title')

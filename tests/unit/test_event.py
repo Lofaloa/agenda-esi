@@ -8,6 +8,7 @@ from .util import create_event_with_context
 from .util import assert_event_equal
 from .util import assert_event_error
 from .util import assert_agenda_contains
+from .util import assert_event_capacity_error
 
 from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
@@ -30,6 +31,11 @@ class TestEvent(TransactionCase):
         )
         assert_event_equal(self, event, 'My Event', 'd', start, end , 405, 1)
         assert_agenda_contains(self, agenda, event)
+
+    def test_event_with_too_much_attendees(self):
+        only_attendee =  create_partner(self, "Michael Jackson")
+        intruder =  create_partner(self, "Charles Manson")
+        assert_event_capacity_error(self, 1, [only_attendee, intruder])
 
     def test_title_not_blank_constraint(self):
         start = datetime(2019, 1, 1, 12, 0, 0)
