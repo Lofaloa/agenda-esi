@@ -146,7 +146,6 @@ class Event(models.Model):
         """
         event = super(Event, self).create(vals)
         agenda_id = self.env.context.get('default_agenda_id', False)
-        agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
-        agenda.write({'events': [(4, event.id)]})
-        self.agenda = agenda_id
+        current_agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
+        current_agenda.write({'events': [(4, event.id)]})
         return event
