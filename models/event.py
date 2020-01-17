@@ -6,6 +6,7 @@ from datetime import timedelta
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+
 class Event(models.Model):
     """
     An event is a gathering of poeple taking place at a given time and location
@@ -58,6 +59,14 @@ class Event(models.Model):
 
     # TODO: the attendees of an event should be members of an event agenda.
     # attendees = fields.Many2One
+    agenda = fields.Many2one(comodel_name="agenda_esi.agenda", required=True)
+
+    @api.constrains('agenda', 'capacity')
+    def _check_attendees_capacity(self):
+        """The number of attendees should respect the event's capacity."""
+        if len(agenda.members) > capacity:
+            msg = """There are too many attendees registered to this event."""
+            raise ValidationError(msg)
 
     @api.constrains('title')
     def _check_title_is_not_blank(self):
@@ -65,9 +74,9 @@ class Event(models.Model):
         """
         for record in self:
             if not record.title:
-                    msg = """Invalid event title! The event title should not be\
+                msg = """Invalid event title! The event title should not be\
                     blank."""
-                    raise ValidationError(msg)
+                raise ValidationError(msg)
 
     @api.constrains('start_datetime', 'end_datetime')
     def _check_start_is_before_end(self):
@@ -75,9 +84,9 @@ class Event(models.Model):
         """
         for record in self:
             if record.end_datetime < record.start_datetime:
-                    msg = """Invalid event start and end times! The event
+                msg = """Invalid event start and end times! The event
                     should start before it ends."""
-                    raise ValidationError(msg)
+                raise ValidationError(msg)
 
     @api.constrains('classroom')
     def _check_capacity(self):
