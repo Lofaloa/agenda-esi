@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="agenda_form_view">
+        <field name="name">event.form</field>
+        <field name="model">agenda_esi.event</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="title" />
+                        <field name="periodicity" />
+                        <field name="start_datetime" />
+                        <field name="end_datetime" />
+                        <field name="classroom" />
+                        <field name="capacity" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+</odoo>

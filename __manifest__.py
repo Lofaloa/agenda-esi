@@ -27,6 +27,7 @@
         'views/menus.xml',
         'views/agenda/form.xml',
         'views/agenda/list.xml',
+        'views/event/form.xml',
         'views/event/list.xml',
         'views/event/calendar.xml',
     ],

@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-	<record model="ir.ui.view" id="agenda_form_view">
+    <!-- Shows the detail of an angenda in a form. This view shows the agenda
+    title, organizer and members. -->
+    <record model="ir.ui.view" id="agenda_form_view">
         <field name="name">agenda.form</field>
         <field name="model">agenda_esi.agenda</field>
         <field name="arch" type="xml">
             <form>
-                <field name="title" />
-                <field name="organizer" />
-                <field name="members" />
-                <field name="events" />
+                <sheet>
+                    <notebook string="Agenda">
+                        <page string="Information">
+                            <group>
+                                <field name="title" />
+                                <field name="organizer" />
+                            </group>
+                        </page>
+                        <page string="Members">
+                            <field name="members" />
+                        </page>
+                    </notebook>
+                </sheet>
             </form>
         </field>
     </record>
