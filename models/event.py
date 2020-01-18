@@ -79,14 +79,43 @@ class Event(models.Model):
         compute="_get_attendees_count",
         store=True)
 
+    is_current_user_attendee = fields.Boolean(compute="_set_is_current_user_attendee")
+
+    @api.depends('attendees')
+    def _set_is_current_user_attendee(self):
+        for record in self:
+            current_user = self.env.user.partner_id
+            records = self.attendees.filtered(lambda a: a.id == current_user.id)
+            record.is_current_user_attendee = len(records) == 1
+
     @api.depends('attendees')
     def _get_attendees_count(self):
         for record in self:
             record.attendees_count = len(record.attendees)
 
+    @api.constrains('attendees', 'agenda')
+    def _check_attendees_are_agenda_members(self):
+        for record in self:
+            for attendee in record.attendees:
+                members = self.agenda.members.filtered(lambda m: m.id == attendee.id)
+                if len(members) == 0:
+                    msg = '''{user} cannot attend this event, (s)he is not\
+                    following this event agenda ({agenda})!
+                    '''.format(user=attendee.name, agenda=self.agenda.title)
+                    raise ValidationError(msg)
+
     @api.constrains('attendees', 'capacity')
     def _check_attendees_capacity(self):
         """The number of attendees should respect the event's capacity."""
+        for record in self:
+            if len(record.attendees) > record.capacity:
+                msg = """There are too many attendees registered to this
+                event."""
+                raise ValidationError(msg)
+
+    @api.constrains('attendees', 'agenda')
+    def _check_attendees_capacity(self):
+        """ Makes sure an attendee is a member o"""
         for record in self:
             if len(record.attendees) > record.capacity:
                 msg = """There are too many attendees registered to this
@@ -160,3 +189,22 @@ class Event(models.Model):
         current_agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
         current_agenda.write({'events': [(4, event.id)]})
         return event
+
+    def _is_current_user_attendee(self):
+        current_user = self.env.user.partner_id
+        records = self.attendees.filtered(lambda a: a.id == current_user.id)
+        return len(records) == 1
+
+    def attend(self):
+        """ Adds the current user to this event attendees. If the user is
+        already one then a call to this method removes him from this event
+        attendees.
+
+        TODO: the current user should be a member of this event agenda.
+        """
+        current_user = self.env.user.partner_id
+        if not self._is_current_user_attendee():
+            self.write({'attendees': [(4, current_user.id)]})
+        else:
+            self.write({'attendees': [(3, current_user.id)]})
+        return True

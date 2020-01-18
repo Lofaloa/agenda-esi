@@ -92,11 +92,6 @@ class Agenda(models.Model):
             'domain': [('id', 'in', self.events.ids)]
         }
 
-    def _is_current_user_member(self):
-        current_user = self.env.user.partner_id
-        records = self.members.filtered(lambda m: m.id == current_user.id)
-        return len(records) == 1
-
     @api.multi
     def show_graph_action(self):
         """ Return an action as a dictionnary. The action shows a calendar view
@@ -121,10 +116,21 @@ class Agenda(models.Model):
             # 'context': {'default_agenda_id': self.id},
             # 'domain': [('id', 'in', self.events.ids)]
         }
+
+    def _is_current_user_member(self):
+        current_user = self.env.user.partner_id
+        records = self.members.filtered(lambda m: m.id == current_user.id)
+        return len(records) == 1
     
     def follow(self):
         """ Adds the current user to this agenda members. If the user is a
         member then a call to this method removes him from this agenda members.
+
+        When the current user starts following this agenda. By default, (s)he
+        is not attending the events of this agenda.
+
+        If the current user decides to unfollow this agenda then (s)he will be
+        removed from the attendees of all events as well.
 
         TODO: find a way to unit test this function. I was not able to set the
         current user in a unit test context (Logan).
@@ -133,5 +139,7 @@ class Agenda(models.Model):
         if not self._is_current_user_member():
             self.write({'members': [(4, current_user.id)]})
         else:
+            for event in self.events:
+                event.write({'attendees': [(3, current_user.id)]})
             self.write({'members': [(3, current_user.id)]})
         return True
