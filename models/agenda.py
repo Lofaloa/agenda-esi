@@ -48,6 +48,15 @@ class Agenda(models.Model):
         required=False,
         ondelete='set null')
 
+    is_current_user_member = fields.Boolean(compute="_set_is_current_user_member")
+
+    @api.depends('members')
+    def _set_is_current_user_member(self):
+        for record in self:
+            current_user = self.env.user.partner_id
+            records = self.members.filtered(lambda m: m.id == current_user.id)
+            record.is_current_user_member = len(records) == 1
+
     @api.constrains('title')
     def _check_title_is_not_blank(self):
         """ Makes sure that the title of an agenda isn't blank.
@@ -57,12 +66,6 @@ class Agenda(models.Model):
                     msg = """Invalid agenda title! The event title should not be\
                     blank."""
                     raise ValidationError(msg)
-
-    @api.model
-    def _is_current_user_member(self):
-        current_user = self.env.user.partner_id
-        records = self.members.filtered(lambda m: m.id == current_user.id)
-        return len(records) == 1
 
     @api.multi
     def show_calendar_action(self):
@@ -89,22 +92,18 @@ class Agenda(models.Model):
             'domain': [('id', 'in', self.events.ids)]
         }
 
+    def _is_current_user_member(self):
+        current_user = self.env.user.partner_id
+        records = self.members.filtered(lambda m: m.id == current_user.id)
+        return len(records) == 1
+
     @api.multi
     def follow(self):
         current_user = self.env.user.partner_id
         if not self._is_current_user_member():
             self.write({'members': [(4, current_user.id)]})
+            _logger.warning("USER following: %s" % current_user.id)
         else:
-            _logger.warning("Follow button clicked but the user is already a member.")
-        return True
-
-    @api.multi
-    def unfollow(self):
-        """ Removes the current user from this agenda members list.
-        """
-        current_user = self.env.user.partner_id
-        if self._is_current_user_member():
             self.write({'members': [(3, current_user.id)]})
-        else:
-            _logger.warning("Follow button clicked but the user is not a member.")
+            _logger.warning("USER unfollowing: %s" % current_user.id)
         return True
