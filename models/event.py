@@ -42,6 +42,15 @@ class Event(models.Model):
         default_end_datetime = datetime.now() + timedelta(hours=2)
         return fields.Datetime.to_string(default_end_datetime)
 
+    @api.model
+    def _exist_current_agenda(self):
+        """ Tells if the default_agenda_id context variable is defined. This
+        function is used to tell if this event agenda fiel should be readonly.
+
+        The agenda field should be readonly when the variable is defined.
+        """
+        return self.env.context.get('default_agenda_id', False)
+
     _name = 'agenda_esi.event'
 
     PERIODICITY_OPTIONS = [
@@ -70,7 +79,6 @@ class Event(models.Model):
     agenda = fields.Many2one(
         comodel_name="agenda_esi.agenda",
         required=True,
-        readonly=True,
         default=lambda self: self.env.context.get('default_agenda_id', False)
     )
 
@@ -80,6 +88,7 @@ class Event(models.Model):
         store=True)
 
     is_current_user_attendee = fields.Boolean(compute="_set_is_current_user_attendee")
+    exist_current_agenda_in_context = fields.Boolean(default=_exist_current_agenda)
 
     @api.depends('attendees')
     def _set_is_current_user_attendee(self):
