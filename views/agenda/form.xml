@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <!-- Shows the detail of an angenda in a form. This view shows the agenda
@@ -43,5 +43,5 @@
             </form>
         </field>
     </record>
-    
+
 </odoo>

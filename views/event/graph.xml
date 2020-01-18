@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="event_graph_view">
+        <field name="name">event.graph</field>
+        <field name="model">agenda_esi.event</field>
+        <field name="arch" type="xml">
+            <graph string="Event participations">
+                <field name="title" />
+                <field name="attendees_count" type="measure" />
+            </graph>
+        </field>
+    </record>
+</odoo>

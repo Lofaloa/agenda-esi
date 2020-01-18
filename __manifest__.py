@@ -30,6 +30,7 @@
         'views/event/form.xml',
         'views/event/list.xml',
         'views/event/calendar.xml',
+        'views/event/graph.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

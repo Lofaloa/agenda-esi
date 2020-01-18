@@ -1,24 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <!-- TODO: an authorized user should be able to add an event to the agenda
     represented by this view. -->
-	<record model="ir.ui.view" id="agenda_calendar_view">
+    <record model="ir.ui.view" id="agenda_calendar_view">
         <field name="name">agenda.calendar</field>
         <field name="model">agenda_esi.event</field>
         <field name="arch" type="xml">
-                
-            <calendar 
-                string="Calendar"
-                date_start="start_datetime"
-                date_stop="end_datetime"
-                quick_add="false"
-                mode="month">
-                
-                <field name="title"/>
-                <field name="classroom"/>
-                <field name="capacity"/>
-            
+            <calendar string="Calendar" date_start="start_datetime" date_stop="end_datetime" quick_add="false" mode="month">
+
+                <field name="title" />
+                <field name="classroom" />
+                <field name="capacity" />
+
             </calendar>
         </field>
     </record>
