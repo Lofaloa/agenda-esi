@@ -9,6 +9,7 @@ from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
+
 class Event(models.Model):
     """
     An event is a gathering of poeple taking place at a given time and location
@@ -16,7 +17,7 @@ class Event(models.Model):
     Note about constraints: I (Logan) am not sure if we need to define both
     sql and python constraints. It is worth noting that odoo.api.constraints
     won't be triggered for fields that are not present in the view.
-    For more information : 
+    For more information :
     https://www.odoo.com/documentation/11.0/reference/orm.html#odoo.api.constrains
 
     Note about the location: we werea asked a location for an event. We chose
@@ -73,12 +74,22 @@ class Event(models.Model):
         default=lambda self: self.env.context.get('default_agenda_id', False)
     )
 
+    attendees_count = fields.Integer(
+        string="Attendees count",
+        compute="_get_attendees_count",
+        store=True)
+
+    @api.depends('attendees')
+    def _get_attendees_count(self):
+        for record in self:
+            record.attendees_count = len(record.attendees)
+
     @api.constrains('attendees', 'capacity')
     def _check_attendees_capacity(self):
         """The number of attendees should respect the event's capacity."""
         for record in self:
             if len(record.attendees) > record.capacity:
-                msg = """There are too many attendees registered to this 
+                msg = """There are too many attendees registered to this
                 event."""
                 raise ValidationError(msg)
 

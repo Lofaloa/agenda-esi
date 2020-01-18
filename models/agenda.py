@@ -5,6 +5,7 @@ from .esi_partner import EsiPartner
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+
 class Agenda(models.Model):
     """
     An agenda is a set of event organized by an event organizer. The organizer
@@ -52,9 +53,9 @@ class Agenda(models.Model):
         """
         for record in self:
             if not record.title:
-                    msg = """Invalid agenda title! The event title should not be\
+                msg = """Invalid agenda title! The event title should not be\
                     blank."""
-                    raise ValidationError(msg)
+                raise ValidationError(msg)
 
     @api.multi
     def show_calendar_action(self):
@@ -77,6 +78,31 @@ class Agenda(models.Model):
             'name': 'Agenda Events',
             'view_mode': 'calendar',
             'res_model': 'agenda_esi.event',
-            'context': { 'default_agenda_id': self.id },
+            'context': {'default_agenda_id': self.id},
             'domain': [('id', 'in', self.events.ids)]
+        }
+
+    @api.multi
+    def show_graph_action(self):
+        """ Return an action as a dictionnary. The action shows a calendar view
+        that contains all this agenda events. This agenda id is passed in the
+        action context and can be found with the key 'default_agenda_id'.
+
+        This action should be called by the button (Calendar) in the agenda
+        list view cell.
+
+        Note (Logan): I didn't find any documentation concerning Odoo 11. The
+        dictionnary entries are based on the Odoo 8 documentation.
+
+        Checking out the table schema helps too (describe table).
+
+        https://www.odoo.com/documentation/8.0/reference/actions.html
+        """
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Graph events',
+            'view_mode': 'graph',
+            'res_model': 'agenda_esi.event',
+            # 'context': {'default_agenda_id': self.id},
+            # 'domain': [('id', 'in', self.events.ids)]
         }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <!-- Overrides the default agenda tree to show the agenda title and its
@@ -8,9 +8,10 @@
         <field name="model">agenda_esi.agenda</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="title"/>
-                <field name="organizer"/>
-                <button  string="Calendar" type="object" name="show_calendar_action" class="oe_highlight"/>
+                <field name="title" />
+                <field name="organizer" />
+                <button string="Calendar" type="object" name="show_calendar_action" class="oe_highlight" />
+                <button string="Graphs" type="object" name="show_graph_action" class="oe_highlight" />
             </tree>
         </field>
     </record>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <!-- Shows the detail of an angenda in a form. This view shows the agenda
@@ -9,11 +9,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button 
-                        string="Go to calendar"
-                        type="object"
-                        name="show_calendar_action"
-                        class="oe_highlight"/>
+                    <button string="Go to calendar" type="object" name="show_calendar_action" class="oe_highlight" />
+                    <button string="Graphs" type="object" name="show_graph_action" class="oe_highlight" />
                 </header>
                 <sheet>
                     <notebook string="Agenda">
@@ -31,5 +28,5 @@
             </form>
         </field>
     </record>
-    
+
 </odoo>
