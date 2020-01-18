@@ -123,6 +123,12 @@ class Agenda(models.Model):
         }
     
     def follow(self):
+        """ Adds the current user to this agenda members. If the user is a
+        member then a call to this method removes him from this agenda members.
+
+        TODO: find a way to unit test this function. I was not able to set the
+        current user in a unit test context (Logan).
+        """
         current_user = self.env.user.partner_id
         if not self._is_current_user_member():
             self.write({'members': [(4, current_user.id)]})

@@ -41,7 +41,6 @@ def create_event_with_attendees(test, capacity, attendees):
 def create_partner(test, name):
     return test.env['res.partner'].create({'name': name})
 
-
 def create_agenda(test, title, organizer):
     return test.env['agenda_esi.agenda'].create({
         'title': title,
