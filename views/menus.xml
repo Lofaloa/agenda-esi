@@ -14,16 +14,6 @@
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="event_list_action">
-        <field name="name">Events</field>
-        <field name="res_model">agenda_esi.event</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form,calendar,graph</field>
-        <field name="help" type="html">
-            <p class="oe_view_nocontent_create">Create the first event!</p>
-        </field>
-    </record>
-
     <record model="ir.actions.act_window" id="esi_partner_list_action">
         <field name="name">Partners</field>
         <field name="res_model">res.partner</field>
@@ -41,9 +31,6 @@
     <menuitem id="agenda_esi_menu" name="Agenda ESI" parent="main_agenda_esi_menu" />
 
     <menuitem id="agenda_menu" name="Agendas" parent="agenda_esi_menu" action="agenda_calendar_action" />
-
-    <!-- NOTE: useful? The events should be displayed in the a calendar (let it be during dev) -->
-    <menuitem id="event_menu" name="Events (Debug)" parent="agenda_esi_menu" action="event_list_action" />
 
     <!-- TODO: should only show the HE2B ési partners -->
     <menuitem id="partner_menu" name="Partners" parent="agenda_esi_menu" action="esi_partner_list_action" />
