@@ -1,0 +1,21 @@
+<odoo>
+
+    <!-- Defines some data useful to the module demonstration -->
+
+    <record id="partner_01" model="res.partner">
+        <field name="name">Logan Farci</field>
+    </record>
+
+    <record id="partner_02" model="res.partner">
+        <field name="name">Anthony Farci</field>
+    </record>
+
+    <record id="partner_03" model="res.partner">
+        <field name="name">Conseil Étudiant</field>
+    </record>
+
+    <record id="partner_04" model="res.partner">
+        <field name="name">ESI</field>
+    </record>
+
+</odoo>

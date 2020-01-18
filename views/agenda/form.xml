@@ -11,6 +11,9 @@
                 <header>
                     <button string="Go to calendar" type="object" name="show_calendar_action" class="oe_highlight" />
                     <button string="Graphs" type="object" name="show_graph_action" class="oe_highlight" />
+                    <button string="Go to calendar" type="object" name="show_calendar_action" class="oe_highlight" />
+                    <button string="Follow" type="object" name="follow" class="oe_highlight" />
+                    <button string="Unfollow" type="object" name="unfollow" class="oe_highlight" />
                 </header>
                 <sheet>
                     <notebook string="Agenda">

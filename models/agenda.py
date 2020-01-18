@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import logging
 from .esi_partner import EsiPartner
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+_logger = logging.getLogger(__name__)
 
 class Agenda(models.Model):
     """
@@ -22,7 +24,6 @@ class Agenda(models.Model):
         events (odoo.fields.Many2One): The set of organized events
         members (odoo.fields.Many2One): The set of an angenda members
     """
-
     _name = 'agenda_esi.agenda'
 
     title = fields.Char(required=True)
@@ -56,6 +57,12 @@ class Agenda(models.Model):
                 msg = """Invalid agenda title! The event title should not be\
                     blank."""
                 raise ValidationError(msg)
+
+    @api.model
+    def _is_current_user_member(self):
+        current_user = self.env.user.partner_id
+        records = self.members.filtered(lambda m: m.id == current_user.id)
+        return len(records) == 1
 
     @api.multi
     def show_calendar_action(self):
@@ -106,3 +113,22 @@ class Agenda(models.Model):
             # 'context': {'default_agenda_id': self.id},
             # 'domain': [('id', 'in', self.events.ids)]
         }
+    
+    def follow(self):
+        current_user = self.env.user.partner_id
+        if not self._is_current_user_member():
+            self.write({'members': [(4, current_user.id)]})
+        else:
+            _logger.warning("Follow button clicked but the user is already a member.")
+        return True
+
+    @api.multi
+    def unfollow(self):
+        """ Removes the current user from this agenda members list.
+        """
+        current_user = self.env.user.partner_id
+        if self._is_current_user_member():
+            self.write({'members': [(3, current_user.id)]})
+        else:
+            _logger.warning("Follow button clicked but the user is not a member.")
+        return True
