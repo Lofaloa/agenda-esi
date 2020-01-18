@@ -1,21 +1,39 @@
 <odoo>
 
-    <!-- Defines some data useful to the module demonstration -->
-
-    <record id="partner_01" model="res.partner">
+    <record id="47923" model="res.users">
         <field name="name">Logan Farci</field>
+        <field name="login">47923</field>
+        <field name="is_esi_partner">True</field>
     </record>
 
-    <record id="partner_02" model="res.partner">
+    <record id="49737" model="res.users">
         <field name="name">Anthony Farci</field>
+        <field name="login">49737</field>
+        <field name="is_esi_partner">True</field>
     </record>
 
-    <record id="partner_03" model="res.partner">
+    <record id="jlc" model="res.users">
+        <field name="name">Jonathan Lechien</field>
+        <field name="login">JLC</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="sdr" model="res.users">
+        <field name="name">Sébastien Drobisz</field>
+        <field name="login">SDR</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="ce" model="res.users">
         <field name="name">Conseil Étudiant</field>
+        <field name="login">conseil</field>
+        <field name="is_esi_partner">True</field>
     </record>
 
-    <record id="partner_04" model="res.partner">
-        <field name="name">ESI</field>
+    <record id="esi" model="res.users">
+        <field name="name">École Supérieure d'Informatique</field>
+        <field name="login">ESI</field>
+        <field name="is_esi_partner">True</field>
     </record>
 
 </odoo>

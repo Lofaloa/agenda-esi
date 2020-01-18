@@ -42,6 +42,15 @@ class Event(models.Model):
         default_end_datetime = datetime.now() + timedelta(hours=2)
         return fields.Datetime.to_string(default_end_datetime)
 
+    @api.model
+    def _exist_current_agenda(self):
+        """ Tells if the default_agenda_id context variable is defined. This
+        function is used to tell if this event agenda fiel should be readonly.
+
+        The agenda field should be readonly when the variable is defined.
+        """
+        return self.env.context.get('default_agenda_id', False)
+
     _name = 'agenda_esi.event'
 
     PERIODICITY_OPTIONS = [
@@ -70,7 +79,6 @@ class Event(models.Model):
     agenda = fields.Many2one(
         comodel_name="agenda_esi.agenda",
         required=True,
-        readonly=True,
         default=lambda self: self.env.context.get('default_agenda_id', False)
     )
 
@@ -79,14 +87,44 @@ class Event(models.Model):
         compute="_get_attendees_count",
         store=True)
 
+    is_current_user_attendee = fields.Boolean(compute="_set_is_current_user_attendee")
+    exist_current_agenda_in_context = fields.Boolean(default=_exist_current_agenda)
+
+    @api.depends('attendees')
+    def _set_is_current_user_attendee(self):
+        for record in self:
+            current_user = self.env.user.partner_id
+            records = self.attendees.filtered(lambda a: a.id == current_user.id)
+            record.is_current_user_attendee = len(records) == 1
+
     @api.depends('attendees')
     def _get_attendees_count(self):
         for record in self:
             record.attendees_count = len(record.attendees)
 
+    @api.constrains('attendees', 'agenda')
+    def _check_attendees_are_agenda_members(self):
+        for record in self:
+            for attendee in record.attendees:
+                members = self.agenda.members.filtered(lambda m: m.id == attendee.id)
+                if len(members) == 0:
+                    msg = '''{user} cannot attend this event, (s)he is not\
+                    following this event agenda ({agenda})!
+                    '''.format(user=attendee.name, agenda=self.agenda.title)
+                    raise ValidationError(msg)
+
     @api.constrains('attendees', 'capacity')
     def _check_attendees_capacity(self):
         """The number of attendees should respect the event's capacity."""
+        for record in self:
+            if len(record.attendees) > record.capacity:
+                msg = """There are too many attendees registered to this
+                event."""
+                raise ValidationError(msg)
+
+    @api.constrains('attendees', 'agenda')
+    def _check_attendees_capacity(self):
+        """ Makes sure an attendee is a member o"""
         for record in self:
             if len(record.attendees) > record.capacity:
                 msg = """There are too many attendees registered to this
@@ -156,7 +194,28 @@ class Event(models.Model):
         aborted.
         """
         event = super(Event, self).create(vals)
-        agenda_id = self.env.context.get('default_agenda_id', False)
-        current_agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
-        current_agenda.write({'events': [(4, event.id)]})
+        _logger.warning("EVENT %s", event)
+        # if self._exist_current_agenda():
+        #     # agenda_id = self.env.context.get('default_agenda_id', False)
+        #     # current_agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
+        #     # current_agenda.write({'events': [(4, event.id)]})
         return event
+
+    def _is_current_user_attendee(self):
+        current_user = self.env.user.partner_id
+        records = self.attendees.filtered(lambda a: a.id == current_user.id)
+        return len(records) == 1
+
+    def attend(self):
+        """ Adds the current user to this event attendees. If the user is
+        already one then a call to this method removes him from this event
+        attendees.
+
+        TODO: the current user should be a member of this event agenda.
+        """
+        current_user = self.env.user.partner_id
+        if not self._is_current_user_attendee():
+            self.write({'attendees': [(4, current_user.id)]})
+        else:
+            self.write({'attendees': [(3, current_user.id)]})
+        return True

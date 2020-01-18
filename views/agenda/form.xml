@@ -2,18 +2,30 @@
 <odoo>
 
     <!-- Shows the detail of an angenda in a form. This view shows the agenda
-    title, organizer and members. -->
+    title, organizer and members. It is possible for the user to show the
+    agenda calendar and to follow/ unfollow it. -->
     <record model="ir.ui.view" id="agenda_form_view">
         <field name="name">agenda.form</field>
         <field name="model">agenda_esi.agenda</field>
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button string="Go to calendar" type="object" name="show_calendar_action" class="oe_highlight" />
-                    <button string="Graphs" type="object" name="show_graph_action" class="oe_highlight" />
-                    <button string="Go to calendar" type="object" name="show_calendar_action" class="oe_highlight" />
-                    <button string="Follow" type="object" name="follow" class="oe_highlight" />
-                    <button string="Unfollow" type="object" name="unfollow" class="oe_highlight" />
+                    <button string="Go to calendar" type="object" 
+                            name="show_calendar_action" class="oe_highlight" />
+                    <!-- This field is required to be in the view in order to
+                    use it in the button attrs fields. -->
+                    <field name="is_current_user_member" invisible="1"/>
+                    <button string="Follow" type="object" name="follow"
+                        class="oe_highlight"
+                        attrs="{
+                            'invisible': [('is_current_user_member','=', True)]
+                        }" />
+                    <button string="Unfollow" type="object" name="follow"
+                        class="oe_highlight"
+                        confirm="Are you sure you want to unfollow?"
+                        attrs="{
+                            'invisible': [('is_current_user_member','=', False)]
+                        }" />
                 </header>
                 <sheet>
                     <notebook string="Agenda">

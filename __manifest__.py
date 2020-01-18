@@ -32,6 +32,9 @@
         'views/event/graph.xml',
         # 'security/security.xml',
         # 'security/ir.model.access.csv',
+        'views/esi_partner/form.xml',
+        'views/esi_partner/list.xml',
+        'reports/reports.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -6,14 +6,31 @@
         <field name="model">agenda_esi.event</field>
         <field name="arch" type="xml">
             <form>
+            <header>
+                    <field name="is_current_user_attendee" invisible="1"/>
+                    <button string="Attend" type="object" name="attend"
+                        class="oe_highlight"
+                        attrs="{
+                            'invisible': [('is_current_user_attendee','=', True)]
+                        }" />
+                    <button string="Abandon" type="object" name="attend"
+                        class="oe_highlight"
+                        confirm="Are you sure you don't to take part in this event?"
+                        attrs="{
+                            'invisible': [('is_current_user_attendee','=', False)]
+                        }" />
+                </header>
                 <sheet>
                     <group>
                         <field name="title" />
+                        <field name="exist_current_agenda_in_context" invisible="1"/>
+                        <field name="agenda" attrs="{
+                            'readonly': [('exist_current_agenda_in_context', '=', True)]
+                        }" />
                         <field name="periodicity" />
                         <field name="start_datetime" />
                         <field name="end_datetime" />
                         <field name="classroom" />
-                        <field name="agenda" />
                         <field name="capacity" />
                         <field name="attendees" />
                     </group>
