@@ -5,9 +5,8 @@
         <field name="name">event.graph</field>
         <field name="model">agenda_esi.event</field>
         <field name="arch" type="xml">
-            <graph string="Event participations">
+            <graph string="Event participations" type="pie">
                 <field name="title" />
-                <field name="attendees_count" type="measure" />
             </graph>
         </field>
     </record>

@@ -18,7 +18,7 @@
         <field name="name">Events</field>
         <field name="res_model">agenda_esi.event</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="view_mode">tree,form,calendar</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">Create the first event!</p>
         </field>

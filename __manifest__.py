@@ -23,7 +23,6 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
         'views/menus.xml',
         'views/agenda/form.xml',
         'views/agenda/list.xml',
@@ -31,6 +30,8 @@
         'views/event/list.xml',
         'views/event/calendar.xml',
         'views/event/graph.xml',
+        # 'security/security.xml',
+        # 'security/ir.model.access.csv',
     ],
     # only loaded in demonstration mode
     'demo': [
