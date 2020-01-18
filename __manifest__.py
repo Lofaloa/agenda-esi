@@ -32,6 +32,7 @@
         'views/event/calendar.xml',
         'views/event/graph.xml',
         'views/esi_partner/form.xml',
+        'views/esi_partner/list.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

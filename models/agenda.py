@@ -34,8 +34,7 @@ class Agenda(models.Model):
         comodel_name='res.partner',
         required=True,
         ondelete='set null',
-        default=lambda self: self.env.user.partner_id,
-        readonly=True)
+        default=lambda self: self.env.user.partner_id)
 
     events = fields.Many2many(
         comodel_name='agenda_esi.event',
