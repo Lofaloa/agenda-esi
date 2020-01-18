@@ -194,9 +194,11 @@ class Event(models.Model):
         aborted.
         """
         event = super(Event, self).create(vals)
-        agenda_id = self.env.context.get('default_agenda_id', False)
-        current_agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
-        current_agenda.write({'events': [(4, event.id)]})
+        _logger.warning("EVENT %s", event)
+        # if self._exist_current_agenda():
+        #     # agenda_id = self.env.context.get('default_agenda_id', False)
+        #     # current_agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
+        #     # current_agenda.write({'events': [(4, event.id)]})
         return event
 
     def _is_current_user_attendee(self):

@@ -88,7 +88,7 @@ class Agenda(models.Model):
             'view_mode': 'calendar',
             'res_model': 'agenda_esi.event',
             'context': {'default_agenda_id': self.id},
-            'domain': [('id', 'in', self.events.ids)]
+            'domain': [('agenda', '=', self.id)]
         }
 
     @api.multi
