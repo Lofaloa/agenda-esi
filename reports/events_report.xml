@@ -20,9 +20,9 @@
         <div class="article">
             <table class="table table-condensed table-bordered" style="width: 100%">
                 <thead>
-                    <th class="text-center" style="width: 70%">Title</th>
-                    <th class="text-center" style="width: 15%">classroom</th>
-                    <th class="text-center" style="width: 15%">capacity</th>
+                    <th>Title</th>
+                    <th>classroom</th>
+                    <th>capacity</th>
                 </thead>
                 <tbody>
                     <t t-foreach="docs" t-as="doc">
