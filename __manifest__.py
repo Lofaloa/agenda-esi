@@ -48,6 +48,7 @@
         'demo/demo_teachers.xml',
         'demo/demo_students.xml',
         'demo/demo_administratives.xml',
-        'demo/demo.xml',
+        'demo/demo_agendas.xml',
+        'demo/demo_events.xml',
     ],
 }

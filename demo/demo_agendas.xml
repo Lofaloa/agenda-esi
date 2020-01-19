@@ -1,0 +1,43 @@
+<odoo>
+
+    <record id="agenda_texg5" model="agenda_esi.agenda">
+        <field name="title">Expression Et Communication</field>
+        <field name="organizer" ref="teacher_dna"/>
+    </record>
+
+    <record id="agenda_erpg5" model="agenda_esi.agenda">
+        <field name="title">Progiciel de Gestion Intégré</field>
+        <field name="organizer" ref="teacher_jlc"/>
+    </record>
+
+    <record id="agenda_mobg5" model="agenda_esi.agenda">
+        <field name="title">Développement mobile</field>
+        <field name="organizer" ref="teacher_sdr"/>
+    </record>
+
+    <record id="agenda_webg5" model="agenda_esi.agenda">
+        <field name="title">Développement Web III</field>
+        <field name="organizer" ref="teacher_jlc"/>
+    </record>
+
+    <record id="agenda_esi_gathering" model="agenda_esi.agenda">
+        <field name="title">Réunions</field>
+        <field name="organizer" ref="organization_esi"/>
+    </record>
+
+    <record id="agenda_esi_internships" model="agenda_esi.agenda">
+        <field name="title">Préparation aux stages</field>
+        <field name="organizer" ref="organization_esi"/>
+    </record>
+
+    <record id="agenda_ce" model="agenda_esi.agenda">
+        <field name="title">Conseils</field>
+        <field name="organizer" ref="organization_ce"/>
+    </record>
+
+    <record id="agenda_dev" model="agenda_esi.agenda">
+        <field name="title">Développement de Agenda ESI</field>
+        <field name="organizer" ref="student_47923"/>
+    </record>
+
+</odoo>

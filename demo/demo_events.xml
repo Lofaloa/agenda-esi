@@ -1,0 +1,53 @@
+<odoo>
+
+    <record id="event_agenda_dev_01" model="agenda_esi.event">
+        <field name="title">Analyse du projet</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-18 08:15:00</field>
+        <field name="end_datetime">2020-01-18 10:15:00</field>
+        <field name="classroom">505</field>
+        <field name="capacity">2</field>
+        <field name="agenda" ref="agenda_dev"/>
+    </record>
+
+    <record id="event_agenda_dev_02" model="agenda_esi.event">
+        <field name="title">Développement du modèle</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-18 10:30:00</field>
+        <field name="end_datetime">2020-01-18 12:30:00</field>
+        <field name="classroom">505</field>
+        <field name="capacity">2</field>
+        <field name="agenda" ref="agenda_dev"/>
+    </record>
+
+    <record id="event_agenda_dev_03" model="agenda_esi.event">
+        <field name="title">Mise en place de test unitaires</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-19 13:45:00</field>
+        <field name="end_datetime">2020-01-19 15:45:00</field>
+        <field name="classroom">505</field>
+        <field name="capacity">2</field>
+        <field name="agenda" ref="agenda_dev"/>
+    </record>
+
+    <record id="event_agenda_dev_04" model="agenda_esi.event">
+        <field name="title">Mise en place de l'interface</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-20 08:15:00</field>
+        <field name="end_datetime">2020-01-20 10:15:00</field>
+        <field name="classroom">505</field>
+        <field name="capacity">2</field>
+        <field name="agenda" ref="agenda_dev"/>
+    </record>
+
+    <record id="event_agenda_dev_05" model="agenda_esi.event">
+        <field name="title">Déploiement</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-21 16:00:00</field>
+        <field name="end_datetime">2020-01-21 18:00:00</field>
+        <field name="classroom">505</field>
+        <field name="capacity">2</field>
+        <field name="agenda" ref="agenda_dev"/>
+    </record>
+
+</odoo>
