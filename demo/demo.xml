@@ -7,9 +7,19 @@
         <field name="is_esi_partner">True</field>
     </record>
 
+    <record id="student_47923_account" model="res.users">
+        <field name="partner_id" ref="student_47923" />
+        <field name="login">47923</field>
+    </record>
+
     <record id="student_49737" model="res.partner">
         <field name="name">Anthony Farci</field>
         <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="student_49737_account" model="res.users">
+        <field name="partner_id" ref="student_49737" />
+        <field name="login">49737</field>
     </record>
 
     <record id="teacher_jlc" model="res.partner">
@@ -17,9 +27,19 @@
         <field name="is_esi_partner">True</field>
     </record>
 
+    <record id="teacher_jlc_account" model="res.users">
+        <field name="partner_id" ref="teacher_jlc" />
+        <field name="login">jlc</field>
+    </record>
+
     <record id="teacher_sdr" model="res.partner">
         <field name="name">Sébastien Drobisz</field>
         <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="teacher_sdr_account" model="res.users">
+        <field name="partner_id" ref="teacher_sdr" />
+        <field name="login">sdr</field>
     </record>
 
     <record id="teacher_dna" model="res.partner">
@@ -27,9 +47,19 @@
         <field name="is_esi_partner">True</field>
     </record>
 
+    <record id="teacher_dna_account" model="res.users">
+        <field name="partner_id" ref="teacher_dna" />
+        <field name="login">dna</field>
+    </record>
+
     <record id="teacher_srv" model="res.partner">
         <field name="name">Frédéric Servais</field>
         <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="teacher_srv_account" model="res.users">
+        <field name="partner_id" ref="teacher_srv" />
+        <field name="login">srv</field>
     </record>
 
     <record id="organization_ce" model="res.partner">
@@ -37,9 +67,19 @@
         <field name="is_esi_partner">True</field>
     </record>
 
+    <record id="organization_ce_account" model="res.users">
+        <field name="partner_id" ref="organization_ce" />
+        <field name="login">ce</field>
+    </record>
+
     <record id="organization_esi" model="res.partner">
         <field name="name">École Supérieure d'Informatique</field>
         <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="organization_esi_account" model="res.users">
+        <field name="partner_id" ref="organization_esi" />
+        <field name="login">esi</field>
     </record>
 
     <!-- Agendas -->
@@ -72,6 +112,27 @@
     <record id="agenda_ce" model="agenda_esi.agenda">
         <field name="title">Réunions</field>
         <field name="organizer" ref="organization_ce"/>
+    </record>
+
+    <!-- Groups -->
+
+    <record id="group_student" model="res.groups">
+        <field name="name">Agenda ESI / Student</field>
+        <field name="users" eval="[(4, ref('student_47923_account')), (4, ref('student_49737_account'))]" />
+    </record>
+
+    <record id="group_teacher" model="res.groups">
+        <field name="name">Agenda ESI / Teacher</field>
+        <field name="users" eval="[(4, ref('teacher_jlc_account')), (4, ref('teacher_sdr_account')), (4, ref('teacher_srv_account')), (4, ref('teacher_dna_account'))]" />
+    </record>
+
+    <record id="group_administrative" model="res.groups">
+        <field name="name">Agenda ESI / Administrative</field>
+        <field name="users" eval="[(4, ref('organization_esi_account')), (4, ref('organization_ce_account'))]" />
+    </record>
+
+    <record id="group_administrator" model="res.groups">
+        <field name="name">Agenda ESI / Administrator</field>
     </record>
 
     <!-- Events -->

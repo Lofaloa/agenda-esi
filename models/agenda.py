@@ -19,12 +19,25 @@ class Agenda(models.Model):
 
     Attributes:
         _name (str): This model technical name (agenda_esi.agenda)
-        title (odoo.fields.Text): The title of this agenda
-        organizer (odoo.fields.Many2One): The partner who organizes this agenda
-        events (odoo.fields.Many2One): The set of organized events
-        members (odoo.fields.Many2One): The set of an angenda members
+        title (fields.Text): The title of this agenda
+        organizer (fields.Many2One): The partner who organizes this agenda
+        events (fields.Many2One): The set of organized events
+        members (fields.Many2One): The set of an angenda members
+        is_current_user_member (fields.Boolean): Tells if the current user
+        follows this agenda.
+        type (fields.Selection): The type of this agenda.
     """
     _name = 'agenda_esi.agenda'
+
+    AGENDA_TYPE = [
+        # An agenda of type Student can only by created/ written by a student
+        ('s', 'Student'),
+        # An agenda of type Pedagogic can only by created/ written by a teacher
+        ('p', 'Pedagogic'),
+        # An agenda of type Administrative can only by created/ written by an
+        # administrative partner
+        ('a', 'Administrative')
+    ]
 
     title = fields.Char(required=True)
 
@@ -48,6 +61,11 @@ class Agenda(models.Model):
         ondelete='set null')
 
     is_current_user_member = fields.Boolean(compute="_set_is_current_user_member")
+
+    type = fields.Selection(
+        selection=AGENDA_TYPE,
+        default='s'
+    )
 
     @api.depends('members')
     def _set_is_current_user_member(self):

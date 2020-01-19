@@ -33,6 +33,7 @@
                             <group>
                                 <field name="title" />
                                 <field name="organizer" />
+                                <field name="type" />
                             </group>
                         </page>
                         <page string="Members">
