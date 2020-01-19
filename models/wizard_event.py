@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api
 from datetime import datetime
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 from odoo.exceptions import ValidationError
 
 import logging
@@ -17,6 +18,7 @@ class WizardEvent(models.TransientModel):
         event_start_date is the first date of printed events.
         event_end_date is the last date of printed events.
     """
+
     _name = 'agenda_esi.wizard'
 
     event_start_date = fields.Datetime(string="Start date", default=fields.Date.today, required=True)

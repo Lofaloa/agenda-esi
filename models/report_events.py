@@ -1,14 +1,14 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api
 from datetime import datetime
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 
 import logging
 
-_logger = logging.getLogger(__name__)
-
-
 class ReportAttendees(models.AbstractModel):
+
     _name = 'report.agenda_esi.events_recap_report_view'
+    
     @api.model
     def get_report_values(self, docids, data=None):
         date_start = data['form']['event_start_date']
@@ -28,7 +28,6 @@ class ReportAttendees(models.AbstractModel):
                 'capacity': event.capacity,
             })
 
-        _logger.warning('DEBUG DOCS : %s', len(docs))
         return {
             'doc_ids': data['ids'],
             'doc_model': data['model'],
