@@ -8,6 +8,10 @@ _logger = logging.getLogger(__name__)
 
 
 class WizardEvent(models.TransientModel):
+    """A wizardEvent is the class representing the data used by the wizard. 
+        event_start_date is the first date of printed events.
+        event_end_date is the last date of printed events.
+    """
     _name = 'agenda_esi.wizard'
 
     event_start_date = fields.Datetime(
@@ -15,6 +19,7 @@ class WizardEvent(models.TransientModel):
     event_end_date = fields.Datetime(
         string="End date", default=fields.Date.today, required=True)
 
+    """Function called when the button print is clicked. All the needed information is passed to the report."""
     @api.multi
     def print_event_report(self):
         data = {

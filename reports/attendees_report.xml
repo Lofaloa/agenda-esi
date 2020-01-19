@@ -9,7 +9,10 @@
                         Event's title :
                         <span t-field="doc.title" />
                     </h2>
-                    <h3>Attendees registered for this event: </h3>
+                    <h3>Attendees registered for the event: </h3>
+                    <t t-if="len(doc.attendees) == 0">
+                        <p>There is no attendees registered for this course !</p>
+                    </t>
                     <ul>
                         <t t-foreach="doc.attendees" t-as="attendee">
                             <li>
