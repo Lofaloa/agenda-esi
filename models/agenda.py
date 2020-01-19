@@ -8,6 +8,7 @@ from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
+
 class Agenda(models.Model):
     """
     An agenda is a set of event organized by an event organizer. The organizer
@@ -27,6 +28,7 @@ class Agenda(models.Model):
         follows this agenda.
         type (fields.Selection): The type of this agenda.
     """
+
     _name = 'agenda_esi.agenda'
 
     AGENDA_TYPE = [
@@ -60,7 +62,8 @@ class Agenda(models.Model):
         required=False,
         ondelete='set null')
 
-    is_current_user_member = fields.Boolean(compute="_set_is_current_user_member")
+    is_current_user_member = fields.Boolean(
+        compute="_set_is_current_user_member")
 
     type = fields.Selection(selection=AGENDA_TYPE, readonly=True, compute="_set_agenda_type")
 
@@ -122,6 +125,16 @@ class Agenda(models.Model):
 
     @api.multi
     def show_graph_action(self):
+        """ Return an action as a dictionnary. The action shows a graph view
+        that contains the number of attendees registered in an agenda's event.
+
+        This action should be called by the button (Graph) in the agenda
+        list view cell.
+
+        Checking out the table schema helps too (describe table).
+
+        https://www.odoo.com/documentation/8.0/reference/actions.html
+        """
         return {
             'type': 'ir.actions.act_window',
             'name': 'Graph events',
@@ -130,11 +143,23 @@ class Agenda(models.Model):
             'domain': [('agenda', '=', self.id)]
         }
 
+    @api.multi
+    def launch_event_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Print events between : ',
+            'view_mode': 'form',
+            'res_model': 'agenda_esi.wizard',
+            'target': 'new',
+            'key2': 'client_action_multi',
+            'context': {'default_agenda_id': self.id},
+        }
+
     def _is_current_user_member(self):
         current_user = self.env.user.partner_id
         records = self.members.filtered(lambda m: m.id == current_user.id)
         return len(records) == 1
-    
+
     def follow(self):
         """ Adds the current user to this agenda members. If the user is a
         member then a call to this method removes him from this agenda members.

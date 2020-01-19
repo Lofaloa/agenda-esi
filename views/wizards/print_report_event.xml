@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="wizard_form_view">
+        <field name="name">Print report wizard</field>
+        <field name="model">agenda_esi.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Choose start and end dates">
+                <group>
+                    <group>
+                        <field name="event_start_date" />
+                    </group>
+                    <group>
+                        <field name="event_end_date" />
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_event_report" string="Print" class="oe_right oe_highlight" type="object" />
+                    <button string="Cancel" class="oe_right" special="cancel" />
+                </footer>
+
+            </form>
+        </field>
+    </record>
+</odoo>

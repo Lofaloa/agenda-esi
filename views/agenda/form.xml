@@ -10,20 +10,15 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button string="Go to calendar" type="object" 
-                            name="show_calendar_action" class="oe_highlight" />
+                    <button string="Print report" type="object" name="launch_event_wizard" class="oe_highlight" />
+                    <button string="Go to calendar" type="object" name="show_calendar_action" class="oe_highlight" />
                     <!-- This field is required to be in the view in order to
                     use it in the button attrs fields. -->
-                    <field name="is_current_user_member" invisible="1"/>
-                    <button string="Follow" type="object" name="follow"
-                        class="oe_highlight"
-                        attrs="{
+                    <field name="is_current_user_member" invisible="1" />
+                    <button string="Follow" type="object" name="follow" class="oe_highlight" attrs="{
                             'invisible': [('is_current_user_member','=', True)]
                         }" />
-                    <button string="Unfollow" type="object" name="follow"
-                        class="oe_highlight"
-                        confirm="Are you sure you want to unfollow?"
-                        attrs="{
+                    <button string="Unfollow" type="object" name="follow" class="oe_highlight" confirm="Are you sure you want to unfollow?" attrs="{
                             'invisible': [('is_current_user_member','=', False)]
                         }" />
                 </header>
@@ -44,5 +39,4 @@
             </form>
         </field>
     </record>
-
 </odoo>

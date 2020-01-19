@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 class Event(models.Model):
     """
-    An event is a gathering of poeple taking place at a given time and location
+    An event is a gathering of people taking place at a given time and location
 
     Note about constraints: I (Logan) am not sure if we need to define both
     sql and python constraints. It is worth noting that odoo.api.constraints

@@ -2,7 +2,7 @@
 <odoo>
 
     <record model="ir.ui.view" id="base.view_partner_form">
-        <field name="name">event.form</field>
+        <field name="name">partner.form</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
             <form string="Partners">

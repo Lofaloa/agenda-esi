@@ -37,6 +37,11 @@
         'views/event/graph.xml',
         'views/esi_partner/form.xml',
         'views/esi_partner/list.xml',
+        'reports/attendees_report.xml',
+        'views/wizards/print_report_event.xml',
+        'reports/events_report.xml',
+        'views/esi_partner/form.xml',
+        'views/esi_partner/list.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
