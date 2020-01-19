@@ -1,6 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_agenda_esi_agenda_esi,agenda_esi.agenda_esi,model_agenda_esi_agenda,,1,0,0,0
-access_agenda_esi_student,access student,model_agenda_esi_agenda,group_student,1,1,1,0
-access_agenda_esi_teacher, access teacher,model_agenda_esi_agenda, group_teacher,1,1,1,0
-access_agenda_esi_administrative,access administrative,model_agenda_esi_agenda,group_administration,1,1,1,0
-access_agenda_esi_admin,access admin,model_agenda_esi_agenda,group_admin,1,1,1,0
+access_agenda_esi_agenda_for_students,Agenda Access For Students,model_agenda_esi_agenda,agenda_esi.group_student,1,1,1,0
+access_agenda_esi_agenda_for_teachers,Agenda Access For Teachers,model_agenda_esi_agenda,agenda_esi.group_teacher,1,1,1,0
+access_agenda_esi_agenda_for_administratives,Agenda Access For Administratives,model_agenda_esi_agenda,agenda_esi.group_administrative,1,1,1,0
+access_agenda_esi_event_for_students,Event Access For Students,model_agenda_esi_event,agenda_esi.group_student,1,1,1,0
+access_agenda_esi_event_for_teachers,Event Access For Teachers,model_agenda_esi_event,agenda_esi.group_teacher,1,1,1,0
+access_agenda_esi_event_for_administratives,Event Access For Administratives,model_agenda_esi_event,agenda_esi.group_administrative,1,1,1,0

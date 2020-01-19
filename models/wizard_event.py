@@ -23,6 +23,7 @@ class WizardEvent(models.TransientModel):
             'form': {
                 'event_start_date': self.event_start_date,
                 'event_end_date': self.event_end_date,
+                'agenda': self.env.context.get('default_agenda_id'),
             },
         }
         return self.env.ref('agenda_esi.recap_report').report_action(self, data=data)

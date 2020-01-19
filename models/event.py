@@ -60,6 +60,16 @@ class Event(models.Model):
         ('u', 'None')
     ]
 
+    EVENT_TYPE = [
+        # An event of type Student can only by created/ written by a student
+        ('s', 'Student'),
+        # An event of type Pedagogic can only by created/ written by a teacher
+        ('p', 'Pedagogic'),
+        # An event of type Administrative can only by created/ written by an
+        # administrative partner
+        ('a', 'Administrative')
+    ]
+
     CLASS_ROOM_LIMIT = 1000
 
     title = fields.Char()

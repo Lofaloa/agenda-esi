@@ -20,13 +20,26 @@ class Agenda(models.Model):
 
     Attributes:
         _name (str): This model technical name (agenda_esi.agenda)
-        title (odoo.fields.Text): The title of this agenda
-        organizer (odoo.fields.Many2One): The partner who organizes this agenda
-        events (odoo.fields.Many2One): The set of organized events
-        members (odoo.fields.Many2One): The set of an angenda members
+        title (fields.Text): The title of this agenda
+        organizer (fields.Many2One): The partner who organizes this agenda
+        events (fields.Many2One): The set of organized events
+        members (fields.Many2One): The set of an angenda members
+        is_current_user_member (fields.Boolean): Tells if the current user
+        follows this agenda.
+        type (fields.Selection): The type of this agenda.
     """
 
     _name = 'agenda_esi.agenda'
+
+    AGENDA_TYPE = [
+        # An agenda of type Student can only by created/ written by a student
+        ('s', 'Student'),
+        # An agenda of type Pedagogic can only by created/ written by a teacher
+        ('p', 'Pedagogic'),
+        # An agenda of type Administrative can only by created/ written by an
+        # administrative partner
+        ('a', 'Administrative')
+    ]
 
     title = fields.Char(required=True)
 
@@ -36,8 +49,7 @@ class Agenda(models.Model):
         comodel_name='res.partner',
         required=True,
         ondelete='set null',
-        default=lambda self: self.env.user.partner_id,
-        readonly=True)
+        default=lambda self: self.env.user.partner_id)
 
     events = fields.Many2many(
         comodel_name='agenda_esi.event',
@@ -52,6 +64,11 @@ class Agenda(models.Model):
 
     is_current_user_member = fields.Boolean(
         compute="_set_is_current_user_member")
+
+    type = fields.Selection(
+        selection=AGENDA_TYPE,
+        default='s'
+    )
 
     @api.depends('members')
     def _set_is_current_user_member(self):
@@ -92,7 +109,7 @@ class Agenda(models.Model):
             'view_mode': 'calendar',
             'res_model': 'agenda_esi.event',
             'context': {'default_agenda_id': self.id},
-            'domain': [('id', 'in', self.events.ids)]
+            'domain': [('agenda', '=', self.id)]
         }
 
     @api.multi
@@ -112,8 +129,7 @@ class Agenda(models.Model):
             'name': 'Graph events',
             'view_mode': 'graph',
             'res_model': 'agenda_esi.event',
-            # 'context': {'default_agenda_id': self.id},
-            # 'domain': [('id', 'in', self.events.ids)]
+            'domain': [('agenda', '=', self.id)]
         }
 
     @api.multi
@@ -125,9 +141,32 @@ class Agenda(models.Model):
             'res_model': 'agenda_esi.wizard',
             'target': 'new',
             'key2': 'client_action_multi',
+            'context': {'default_agenda_id': self.id},
         }
 
     def _is_current_user_member(self):
         current_user = self.env.user.partner_id
         records = self.members.filtered(lambda m: m.id == current_user.id)
         return len(records) == 1
+
+    def follow(self):
+        """ Adds the current user to this agenda members. If the user is a
+        member then a call to this method removes him from this agenda members.
+
+        When the current user starts following this agenda. By default, (s)he
+        is not attending the events of this agenda.
+
+        If the current user decides to unfollow this agenda then (s)he will be
+        removed from the attendees of all events as well.
+
+        TODO: find a way to unit test this function. I was not able to set the
+        current user in a unit test context (Logan).
+        """
+        current_user = self.env.user.partner_id
+        if not self._is_current_user_member():
+            self.write({'members': [(4, current_user.id)]})
+        else:
+            for event in self.events:
+                event.write({'attendees': [(3, current_user.id)]})
+            self.write({'members': [(3, current_user.id)]})
+        return True

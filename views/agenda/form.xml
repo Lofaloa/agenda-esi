@@ -10,9 +10,8 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button string="Go to calendar" type="object" name="show_calendar_action" class="oe_highlight" />
                     <button string="Print report" type="object" name="launch_event_wizard" class="oe_highlight" />
-
+                    <button string="Go to calendar" type="object" name="show_calendar_action" class="oe_highlight" />
                     <!-- This field is required to be in the view in order to
                     use it in the button attrs fields. -->
                     <field name="is_current_user_member" invisible="1" />
@@ -29,6 +28,7 @@
                             <group>
                                 <field name="title" />
                                 <field name="organizer" />
+                                <field name="type" />
                             </group>
                         </page>
                         <page string="Members">

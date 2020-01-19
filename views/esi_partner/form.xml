@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
-    <record model="ir.ui.view" id="esi_partner_form_view">
-        <field name="name">event.form</field>
+    <record model="ir.ui.view" id="base.view_partner_form">
+        <field name="name">partner.form</field>
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <notebook position="inside">
-                <page string="ÉSI">
+            <form string="Partners">
+                <sheet>
                     <group>
-                        <field string="Is an ÉSI partner" name="is_esi_partner"/>
+                        <field name="name" />
+                        <field name="email" />
                     </group>
-                </page>
-            </notebook>
+                </sheet>
+            </form>
         </field>
     </record>
 

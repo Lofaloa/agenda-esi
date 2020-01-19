@@ -1,0 +1,167 @@
+<odoo>
+
+    <!-- Partners -->
+
+    <record id="student_47923" model="res.partner">
+        <field name="name">Logan Farci</field>
+        <field name="email">47923.demo@etu.he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="student_47923_account" model="res.users">
+        <field name="partner_id" ref="student_47923" />
+        <field name="login">47923</field>
+    </record>
+
+    <record id="student_49737" model="res.partner">
+        <field name="name">Anthony Farci</field>
+        <field name="email">49737.demo@etu.he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="student_49737_account" model="res.users">
+        <field name="partner_id" ref="student_49737" />
+        <field name="login">49737</field>
+    </record>
+
+    <record id="teacher_jlc" model="res.partner">
+        <field name="name">Jonathan Lechien</field>
+        <field name="email">jlechien.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="teacher_jlc_account" model="res.users">
+        <field name="partner_id" ref="teacher_jlc" />
+        <field name="login">jlc</field>
+    </record>
+
+    <record id="teacher_sdr" model="res.partner">
+        <field name="name">Sébastien Drobisz</field>
+        <field name="email">sdrobisz.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="teacher_sdr_account" model="res.users">
+        <field name="partner_id" ref="teacher_sdr" />
+        <field name="login">sdr</field>
+    </record>
+
+    <record id="teacher_dna" model="res.partner">
+        <field name="name">David Nabet</field>
+        <field name="email">dnabet.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="teacher_dna_account" model="res.users">
+        <field name="partner_id" ref="teacher_dna" />
+        <field name="login">dna</field>
+    </record>
+
+    <record id="teacher_srv" model="res.partner">
+        <field name="name">Frédéric Servais</field>
+        <field name="email">fservais.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="teacher_srv_account" model="res.users">
+        <field name="partner_id" ref="teacher_srv" />
+        <field name="login">srv</field>
+    </record>
+
+    <record id="organization_ce" model="res.partner">
+        <field name="name">Conseil Étudiant</field>
+        <field name="email">contact.demo@fef.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="organization_ce_account" model="res.users">
+        <field name="partner_id" ref="organization_ce" />
+        <field name="login">ce</field>
+    </record>
+
+    <record id="organization_esi" model="res.partner">
+        <field name="name">École Supérieure d'Informatique</field>
+        <field name="email">esi.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="organization_esi_account" model="res.users">
+        <field name="partner_id" ref="organization_esi" />
+        <field name="login">esi</field>
+    </record>
+
+    <!-- Agendas -->
+
+    <record id="agenda_texg5" model="agenda_esi.agenda">
+        <field name="title">Expression Et Communication</field>
+        <field name="organizer" ref="teacher_dna"/>
+    </record>
+
+    <record id="agenda_erpg5" model="agenda_esi.agenda">
+        <field name="title">Progiciel de Gestion Intégré</field>
+        <field name="organizer" ref="teacher_jlc"/>
+    </record>
+
+    <record id="agenda_mobg5" model="agenda_esi.agenda">
+        <field name="title">Développement mobile</field>
+        <field name="organizer" ref="teacher_sdr"/>
+    </record>
+
+    <record id="agenda_webg5" model="agenda_esi.agenda">
+        <field name="title">Développement Web III</field>
+        <field name="organizer" ref="teacher_jlc"/>
+    </record>
+
+    <record id="agenda_exams" model="agenda_esi.agenda">
+        <field name="title">Session de Janvier 2020</field>
+        <field name="organizer" ref="organization_esi"/>
+    </record>
+
+    <record id="agenda_ce" model="agenda_esi.agenda">
+        <field name="title">Réunions</field>
+        <field name="organizer" ref="organization_ce"/>
+    </record>
+
+    <!-- Events -->
+
+    <record id="event_mobg5_summary" model="agenda_esi.event">
+        <field name="title">Révision</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-19 08:00:00</field>
+        <field name="end_datetime">2020-01-19 10:00:00</field>
+        <field name="classroom">405</field>
+        <field name="capacity">20</field>
+        <field name="agenda" ref="agenda_mobg5"/>
+    </record>
+
+    <record id="event_mobg5_test" model="agenda_esi.event">
+        <field name="title">Interrogation pratique</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-19 10:15:00</field>
+        <field name="end_datetime">2020-01-19 12:15:00</field>
+        <field name="classroom">405</field>
+        <field name="capacity">20</field>
+        <field name="agenda" ref="agenda_mobg5"/>
+    </record>
+
+    <record id="event_erpg5_django" model="agenda_esi.event">
+        <field name="title">Interrogation Django</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-20 08:15:00</field>
+        <field name="end_datetime">2020-01-20 10:15:00</field>
+        <field name="classroom">405</field>
+        <field name="capacity">20</field>
+        <field name="agenda" ref="agenda_erpg5"/>
+    </record>
+
+    <record id="event_erpg5_odoo" model="agenda_esi.event">
+        <field name="title">Interrogation Odoo</field>
+        <field name="periodicity">u</field>
+        <field name="start_datetime">2020-01-20 10:30:00</field>
+        <field name="end_datetime">2020-01-20 12:30:00</field>
+        <field name="classroom">405</field>
+        <field name="capacity">20</field>
+        <field name="agenda" ref="agenda_erpg5"/>
+    </record>
+
+</odoo>

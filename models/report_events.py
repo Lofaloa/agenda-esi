@@ -13,13 +13,14 @@ class ReportAttendees(models.AbstractModel):
     def get_report_values(self, docids, data=None):
         date_start = data['form']['event_start_date']
         date_end = data['form']['event_end_date']
+        agenda = data['form']['agenda']
 
         docs = []
         events = self.env['agenda_esi.event'].search([
             ('start_datetime', '>=', date_start),
             ('end_datetime', '<=', date_end),
+            ('agenda', '=', agenda),
         ])
-        _logger.warning('EVENT_DEBUGGING : Events -> %s', events)
         for event in events:
             docs.append({
                 'title': event.title,

@@ -1,0 +1,21 @@
+<odoo>
+
+    <!-- Students can create and write student agendas. They can read all
+    agendas. -->
+    <record id="group_student" model="res.groups">
+        <field name="name">Agenda ESI / Student</field>
+    </record>
+
+    <!-- Teachers can create and write pedagogic agendas. They can read all
+    agendas. -->
+    <record id="group_teacher" model="res.groups">
+        <field name="name">Agenda ESI / Teacher</field>
+    </record>
+
+    <!-- Administrative partners can create and write pedagogic agendas. They
+    can read all agendas. -->
+    <record id="group_administrative" model="res.groups">
+        <field name="name">Agenda ESI / Administrative</field>
+    </record>
+
+</odoo>

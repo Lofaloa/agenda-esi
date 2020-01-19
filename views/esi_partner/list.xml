@@ -6,9 +6,8 @@
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="id" />
-                <field name="name" />
-                <field name="email" />
+                <field string="Name" name="name" />
+                <field string="Email" name="email" />
             </tree>
         </field>
     </record>

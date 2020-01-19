@@ -23,6 +23,11 @@
 
     # always loaded
     'data': [
+        'security/security_groups.xml',
+        'security/security_student_rules.xml',
+        'security/security_teacher_rules.xml',
+        'security/security_administrative_rules.xml',
+        'security/ir.model.access.csv',
         'views/menus.xml',
         'views/agenda/form.xml',
         'views/agenda/list.xml',
@@ -30,16 +35,16 @@
         'views/event/list.xml',
         'views/event/calendar.xml',
         'views/event/graph.xml',
-        # 'security/security.xml',
-        # 'security/ir.model.access.csv',
         'views/esi_partner/form.xml',
         'views/esi_partner/list.xml',
         'reports/attendees_report.xml',
         'views/wizards/print_report_event.xml',
         'reports/events_report.xml',
+        'views/esi_partner/form.xml',
+        'views/esi_partner/list.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo_partners.xml',
+        'demo/demo.xml',
     ],
 }
