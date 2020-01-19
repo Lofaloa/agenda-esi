@@ -8,6 +8,7 @@ from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
+
 class Agenda(models.Model):
     """
     An agenda is a set of event organized by an event organizer. The organizer
@@ -24,6 +25,7 @@ class Agenda(models.Model):
         events (odoo.fields.Many2One): The set of organized events
         members (odoo.fields.Many2One): The set of an angenda members
     """
+
     _name = 'agenda_esi.agenda'
 
     title = fields.Char(required=True)
@@ -34,7 +36,8 @@ class Agenda(models.Model):
         comodel_name='res.partner',
         required=True,
         ondelete='set null',
-        default=lambda self: self.env.user.partner_id)
+        default=lambda self: self.env.user.partner_id,
+        readonly=True)
 
     events = fields.Many2many(
         comodel_name='agenda_esi.event',
@@ -47,7 +50,8 @@ class Agenda(models.Model):
         required=False,
         ondelete='set null')
 
-    is_current_user_member = fields.Boolean(compute="_set_is_current_user_member")
+    is_current_user_member = fields.Boolean(
+        compute="_set_is_current_user_member")
 
     @api.depends('members')
     def _set_is_current_user_member(self):
@@ -88,20 +92,16 @@ class Agenda(models.Model):
             'view_mode': 'calendar',
             'res_model': 'agenda_esi.event',
             'context': {'default_agenda_id': self.id},
-            'domain': [('agenda', '=', self.id)]
+            'domain': [('id', 'in', self.events.ids)]
         }
 
     @api.multi
     def show_graph_action(self):
-        """ Return an action as a dictionnary. The action shows a calendar view
-        that contains all this agenda events. This agenda id is passed in the
-        action context and can be found with the key 'default_agenda_id'.
+        """ Return an action as a dictionnary. The action shows a graph view
+        that contains the number of attendees registered in an agenda's event.
 
-        This action should be called by the button (Calendar) in the agenda
+        This action should be called by the button (Graph) in the agenda
         list view cell.
-
-        Note (Logan): I didn't find any documentation concerning Odoo 11. The
-        dictionnary entries are based on the Odoo 8 documentation.
 
         Checking out the table schema helps too (describe table).
 
@@ -116,29 +116,18 @@ class Agenda(models.Model):
             # 'domain': [('id', 'in', self.events.ids)]
         }
 
+    @api.multi
+    def launch_event_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Print events between : ',
+            'view_mode': 'form',
+            'res_model': 'agenda_esi.wizard',
+            'target': 'new',
+            'key2': 'client_action_multi',
+        }
+
     def _is_current_user_member(self):
         current_user = self.env.user.partner_id
         records = self.members.filtered(lambda m: m.id == current_user.id)
         return len(records) == 1
-    
-    def follow(self):
-        """ Adds the current user to this agenda members. If the user is a
-        member then a call to this method removes him from this agenda members.
-
-        When the current user starts following this agenda. By default, (s)he
-        is not attending the events of this agenda.
-
-        If the current user decides to unfollow this agenda then (s)he will be
-        removed from the attendees of all events as well.
-
-        TODO: find a way to unit test this function. I was not able to set the
-        current user in a unit test context (Logan).
-        """
-        current_user = self.env.user.partner_id
-        if not self._is_current_user_member():
-            self.write({'members': [(4, current_user.id)]})
-        else:
-            for event in self.events:
-                event.write({'attendees': [(3, current_user.id)]})
-            self.write({'members': [(3, current_user.id)]})
-        return True

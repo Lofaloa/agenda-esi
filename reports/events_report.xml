@@ -1,0 +1,61 @@
+<odoo>
+    <record model="report.paperformat" id="paperformat_attendance_recap_report">
+        <field name="name">paperformat.events.recap.report</field>
+    </record>
+
+    <report id="recap_report" model="agenda_esi.wizard" string="Events Recap Report" report_type="qweb-pdf" name="agenda_esi.events_recap_report_view" file="agenda_esi.report_events" />
+
+    <template id="events_recap_report_view">
+        <div class="header" style="border-bottom: 2px solid black">
+            <h3 class="text-center">Events Recap Report</h3>
+            <h4 class="text-center">
+                <strong>From</strong>
+                :
+                <t t-esc="date_start" />
+                <strong>To</strong>
+                :
+                <t t-esc="date_end" />
+            </h4>
+        </div>
+        <div class="article">
+            <table class="table table-condensed table-bordered" style="width: 100%">
+                <thead>
+                    <th class="text-center" style="width: 70%">Title</th>
+                    <th class="text-center" style="width: 15%">classroom</th>
+                    <th class="text-center" style="width: 15%">capacity</th>
+                </thead>
+                <tbody>
+                    <t t-foreach="docs" t-as="doc">
+                        <tr>
+                            <td>
+                                <span t-esc="doc['title']" />
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="doc['classroom']" />
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="doc['capacity']" />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="row text-center" style="border-top: 1px solid black;">
+                <div class="col-xs-3 col-xs-offset-9 text-right">
+                    <ul class="list-inline" style="margin-top:10px;">
+                        <li>Page:</li>
+                        <li>
+                            <span class="page" />
+                        </li>
+                        <li>/</li>
+                        <li>
+                            <span class="topage" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>
