@@ -36,6 +36,6 @@
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo_partners.xml',
+        'demo/demo.xml',
     ],
 }
