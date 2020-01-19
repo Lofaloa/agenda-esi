@@ -97,14 +97,17 @@ class Event(models.Model):
         compute="_get_attendees_count",
         store=True)
 
-    is_current_user_attendee = fields.Boolean(compute="_set_is_current_user_attendee")
-    exist_current_agenda_in_context = fields.Boolean(default=_exist_current_agenda)
+    is_current_user_attendee = fields.Boolean(
+        compute="_set_is_current_user_attendee")
+    exist_current_agenda_in_context = fields.Boolean(
+        default=_exist_current_agenda)
 
     @api.depends('attendees')
     def _set_is_current_user_attendee(self):
         for record in self:
             current_user = self.env.user.partner_id
-            records = self.attendees.filtered(lambda a: a.id == current_user.id)
+            records = self.attendees.filtered(
+                lambda a: a.id == current_user.id)
             record.is_current_user_attendee = len(records) == 1
 
     @api.depends('attendees')
@@ -116,7 +119,8 @@ class Event(models.Model):
     def _check_attendees_are_agenda_members(self):
         for record in self:
             for attendee in record.attendees:
-                members = self.agenda.members.filtered(lambda m: m.id == attendee.id)
+                members = self.agenda.members.filtered(
+                    lambda m: m.id == attendee.id)
                 if len(members) == 0:
                     msg = '''{user} cannot attend this event, (s)he is not\
                     following this event agenda ({agenda})!
@@ -181,35 +185,6 @@ class Event(models.Model):
                 msg = """Invalid event capacity! It should be greater than or\
                 equal to 1."""
                 raise ValidationError(msg)
-
-    @api.model
-    def create(self, vals):
-        """ Create a new event with the provided values and associate it with
-        the default agenda.
-
-        The default agenda id can be found in the view context. The value is
-        set in the Agenda Events action (check agenda.py).
-
-        Notes concerning the insertion of a new record to a Many2many field...
-
-        Many2many uses a special “commands” format to manipulate the set of
-        records stored in/associated with the field (check the link below for
-        details). We needed to add an existing record to the agenda events
-        field. Therefore, as described in the documentation, the command is
-        (4, record id to be associated).
-
-        https://www.odoo.com/documentation/11.0/reference/orm.html#model-reference
-
-        TODO: if the default agenda id is not provided, the creation should be
-        aborted.
-        """
-        event = super(Event, self).create(vals)
-        _logger.warning("EVENT %s", event)
-        # if self._exist_current_agenda():
-        #     # agenda_id = self.env.context.get('default_agenda_id', False)
-        #     # current_agenda = self.env['agenda_esi.agenda'].browse(agenda_id)
-        #     # current_agenda.write({'events': [(4, event.id)]})
-        return event
 
     def _is_current_user_attendee(self):
         current_user = self.env.user.partner_id
