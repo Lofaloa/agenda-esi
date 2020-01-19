@@ -1,0 +1,73 @@
+<odoo>
+
+    <!-- ############################ AGENDAS ############################ -->
+
+    <record id="pedagogic_agenda_teacher_rule" model="ir.rule">
+        <field name="name">Teacher can read, create and write pedagogic agendas.</field>
+        <field name="model_id" ref="model_agenda_esi_agenda"/>
+        <field name="groups" eval="[(4, ref('agenda_esi.group_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0" />
+        <field name="domain_force">[('type','=','p')]</field>
+    </record>
+
+    <record id="student_agenda_teacher_rule" model="ir.rule">
+        <field name="name">Teacher can read student agendas.</field>
+        <field name="model_id" ref="model_agenda_esi_agenda"/>
+        <field name="groups" eval="[(4, ref('agenda_esi.group_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0" />
+        <field name="domain_force">[('type','=','s')]</field>
+    </record>
+
+    <record id="administrave_agenda_teacher_rule" model="ir.rule">
+        <field name="name">Teacher can read administrative agendas.</field>
+        <field name="model_id" ref="model_agenda_esi_agenda"/>
+        <field name="groups" eval="[(4, ref('agenda_esi.group_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0" />
+        <field name="domain_force">[('type','=','a')]</field>
+    </record>
+
+    <!-- ############################# EVENTS ############################# -->
+
+    <record id="pedagogic_agenda_event_teacher_rule" model="ir.rule">
+        <field name="name">Teacher can read, create and write an event in a pedagogic agendas.</field>
+        <field name="model_id" ref="model_agenda_esi_event"/>
+        <field name="groups" eval="[(4, ref('agenda_esi.group_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0" />
+        <field name="domain_force">[('agenda.type','=','p')]</field>
+    </record>
+
+    <record id="student_agenda_event_teacher_rule" model="ir.rule">
+        <field name="name">Teacher can read an event in a student agendas.</field>
+        <field name="model_id" ref="model_agenda_esi_event"/>
+        <field name="groups" eval="[(4, ref('agenda_esi.group_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0" />
+        <field name="domain_force">[('agenda.type','=','s')]</field>
+    </record>
+
+    <record id="administrave_agenda_event_teacher_rule" model="ir.rule">
+        <field name="name">Teacher can read an event in a administrative agendas.</field>
+        <field name="model_id" ref="model_agenda_esi_event"/>
+        <field name="groups" eval="[(4, ref('agenda_esi.group_teacher'))]"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0" />
+        <field name="domain_force">[('agenda.type','=','a')]</field>
+    </record>
+
+</odoo>
