@@ -23,7 +23,9 @@
 
     # always loaded
     'data': [
-        'security/security.xml',
+        'security/security_groups.xml',
+        'security/security_student_rules.xml',
+        'security/ir.model.access.csv',
         'views/menus.xml',
         'views/agenda/form.xml',
         'views/agenda/list.xml',

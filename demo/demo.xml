@@ -122,27 +122,6 @@
         <field name="organizer" ref="organization_ce"/>
     </record>
 
-    <!-- Groups -->
-
-    <record id="group_student" model="res.groups">
-        <field name="name">Agenda ESI / Student</field>
-        <field name="users" eval="[(4, ref('student_47923_account')), (4, ref('student_49737_account'))]" />
-    </record>
-
-    <record id="group_teacher" model="res.groups">
-        <field name="name">Agenda ESI / Teacher</field>
-        <field name="users" eval="[(4, ref('teacher_jlc_account')), (4, ref('teacher_sdr_account')), (4, ref('teacher_srv_account')), (4, ref('teacher_dna_account'))]" />
-    </record>
-
-    <record id="group_administrative" model="res.groups">
-        <field name="name">Agenda ESI / Administrative</field>
-        <field name="users" eval="[(4, ref('organization_esi_account')), (4, ref('organization_ce_account'))]" />
-    </record>
-
-    <record id="group_administrator" model="res.groups">
-        <field name="name">Agenda ESI / Administrator</field>
-    </record>
-
     <!-- Events -->
 
     <record id="event_mobg5_summary" model="agenda_esi.event">
