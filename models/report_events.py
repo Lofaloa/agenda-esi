@@ -28,10 +28,12 @@ class ReportAttendees(models.AbstractModel):
                 'capacity': event.capacity,
             })
 
+        _logger.warning('DEBUG DOCS : %s', len(docs))
         return {
             'doc_ids': data['ids'],
             'doc_model': data['model'],
             'date_start': date_start,
             'date_end': date_end,
             'docs': docs,
+            'len_docs': len(docs),
         }

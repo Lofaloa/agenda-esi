@@ -1,6 +1,7 @@
 from odoo import models, fields, api
 from datetime import datetime
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
+from odoo.exceptions import ValidationError
 
 import logging
 
@@ -32,3 +33,10 @@ class WizardEvent(models.TransientModel):
             },
         }
         return self.env.ref('agenda_esi.recap_report').report_action(self, data=data)
+
+    @api.constrains('event_start_date', 'event_end_date')
+    def _check_dates(self):
+        for record in self:
+            if record.event_end_date < record.event_start_date:
+                msg = "Start date must be before end date"
+                raise ValidationError(msg)
