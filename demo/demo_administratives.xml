@@ -1,0 +1,63 @@
+<odoo>
+
+    <record id="organization_ce" model="res.partner">
+        <field name="name">Conseil Étudiant</field>
+        <field name="email">contact.demo@fef.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="organization_ce_account" model="res.users">
+        <field name="partner_id" ref="organization_ce" />
+        <field name="login">ce</field>
+    </record>
+
+    <record id="organization_esi" model="res.partner">
+        <field name="name">École Supérieure d'Informatique</field>
+        <field name="email">esi.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="organization_esi_account" model="res.users">
+        <field name="partner_id" ref="organization_esi" />
+        <field name="login">esi</field>
+    </record>
+
+    <record id="administrative_01" model="res.partner">
+        <field name="name">Tugba Tasdagitici</field>
+        <field name="email">ttas.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="administrative_01_account" model="res.users">
+        <field name="partner_id" ref="administrative_01" />
+        <field name="login">ttas</field>
+    </record>
+
+    <record id="administrative_02" model="res.partner">
+        <field name="name">Carine Martins Rodrigues</field>
+        <field name="email">cmr.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="administrative_02_account" model="res.users">
+        <field name="partner_id" ref="administrative_02" />
+        <field name="login">cmr</field>
+    </record>
+
+    <record id="administrative_03" model="res.partner">
+        <field name="name">Amal Rezzouki</field>
+        <field name="email">arez.demo@he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="administrative_03_account" model="res.users">
+        <field name="partner_id" ref="administrative_03" />
+        <field name="login">arez</field>
+    </record>
+
+    <record id="group_administrative" model="res.groups">
+        <field name="users" eval="[(4, ref('organization_ce_account')), (4, ref('organization_esi_account')), (4, ref('administrative_01_account')), (4, ref('administrative_02_account')), (4, ref('administrative_03_account'))]"/>
+    </record>
+
+
+</odoo>

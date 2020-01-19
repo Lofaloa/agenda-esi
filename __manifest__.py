@@ -45,6 +45,9 @@
     ],
     # only loaded in demonstration mode
     'demo': [
+        'demo/demo_teachers.xml',
+        'demo/demo_students.xml',
+        'demo/demo_administratives.xml',
         'demo/demo.xml',
     ],
 }

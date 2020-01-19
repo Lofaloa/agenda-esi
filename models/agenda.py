@@ -38,13 +38,14 @@ class Agenda(models.Model):
         ('p', 'Pedagogic'),
         # An agenda of type Administrative can only by created/ written by an
         # administrative partner
-        ('a', 'Administrative')
+        ('a', 'Administrative'),
+        # An agenda should always be defined, when it is not the organizer has
+        # no valid group.
+        ('A', 'Administrator')
     ]
 
     title = fields.Char(required=True)
 
-    # TODO: should they have the matching role? E.g. Can a student organize an
-    # event in a pedagogic agenda?
     organizer = fields.Many2one(
         comodel_name='res.partner',
         required=True,
@@ -56,7 +57,6 @@ class Agenda(models.Model):
         required=False,
         ondelete='restrict')
 
-    # TODO: the organizer should not be able to be a member
     members = fields.Many2many(
         comodel_name='res.partner',
         required=False,
@@ -65,10 +65,7 @@ class Agenda(models.Model):
     is_current_user_member = fields.Boolean(
         compute="_set_is_current_user_member")
 
-    type = fields.Selection(
-        selection=AGENDA_TYPE,
-        default='s'
-    )
+    type = fields.Selection(selection=AGENDA_TYPE, readonly=True, compute="_set_agenda_type")
 
     @api.depends('members')
     def _set_is_current_user_member(self):
@@ -76,6 +73,20 @@ class Agenda(models.Model):
             current_user = self.env.user.partner_id
             records = self.members.filtered(lambda m: m.id == current_user.id)
             record.is_current_user_member = len(records) == 1
+
+    @api.depends('organizer')
+    def _set_agenda_type(self):
+        """ Sets agendas types based on the organizer group."""
+        for record in self:
+            organizer_user = self.env['res.users'].search([('partner_id', '=', record.organizer.id)])
+            if organizer_user.has_group('agenda_esi.group_student'):
+                record.type = 's'
+            elif organizer_user.has_group('agenda_esi.group_teacher'):
+                record.type = 'p'
+            elif organizer_user.has_group('agenda_esi.group_administrative'):
+                record.type = 'a'
+            else:
+                record.type = 'A'
 
     @api.constrains('title')
     def _check_title_is_not_blank(self):

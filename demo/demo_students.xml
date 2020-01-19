@@ -1,0 +1,62 @@
+<odoo>
+
+    <record id="student_47923" model="res.partner">
+        <field name="name">Logan Farci</field>
+        <field name="email">47923.demo@etu.he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="student_47923_account" model="res.users">
+        <field name="partner_id" ref="student_47923" />
+        <field name="login">47923</field>
+    </record>
+
+    <record id="student_49737" model="res.partner">
+        <field name="name">Anthony Farci</field>
+        <field name="email">49737.demo@etu.he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="student_49737_account" model="res.users">
+        <field name="partner_id" ref="student_49737" />
+        <field name="login">49737</field>
+    </record>
+
+    <record id="student_40000" model="res.partner">
+        <field name="name">Bruce Wayne</field>
+        <field name="email">40000.demo@etu.he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="student_40000_account" model="res.users">
+        <field name="partner_id" ref="student_40000" />
+        <field name="login">40000</field>
+    </record>
+
+    <record id="student_40001" model="res.partner">
+        <field name="name">Heath Ledger</field>
+        <field name="email">40001.demo@etu.he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="student_40001_account" model="res.users">
+        <field name="partner_id" ref="student_40001" />
+        <field name="login">40001</field>
+    </record>
+
+    <record id="student_40002" model="res.partner">
+        <field name="name">Joaquin Phoenix</field>
+        <field name="email">40002.demo@etu.he2b.be</field>
+        <field name="is_esi_partner">True</field>
+    </record>
+
+    <record id="student_40002_account" model="res.users">
+        <field name="partner_id" ref="student_40002" />
+        <field name="login">40002</field>
+    </record>
+
+    <record id="group_student" model="res.groups">
+        <field name="users" eval="[(4, ref('student_47923_account')), (4, ref('student_49737_account')), (4, ref('student_40000_account')), (4, ref('student_40001_account')), (4, ref('student_40002_account'))]"/>
+    </record>
+
+</odoo>
