@@ -26,6 +26,7 @@
         'security/security_groups.xml',
         'security/security_student_rules.xml',
         'security/security_teacher_rules.xml',
+        'security/security_administrative_rules.xml',
         'security/ir.model.access.csv',
         'views/menus.xml',
         'views/agenda/form.xml',
