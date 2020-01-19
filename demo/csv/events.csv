@@ -1,0 +1,4 @@
+"title","agenda/ external id ","periodicity","start_datetime","end_datetime","classroom","capacity"
+"Interrogation Django",agenda_esi.agenda_erpg5,"None","2020-01-19 08:15:00","2020-01-19 10:15:00","405","30"
+"Interrogation Odoo",agenda_esi.agenda_erpg5,"None","2020-01-19 10:30:00","2020-01-19 12:30:00","400","25"
+"Développement du projet",agenda_esi.agenda_erpg5,"None","2020-01-01 13:45:00","2020-01-22 15:45:00","405","21"
