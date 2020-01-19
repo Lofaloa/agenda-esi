@@ -9,7 +9,6 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
-
 class AgendaEsi(http.Controller):
 
     def event_to_dictionnary(self, event):
@@ -19,18 +18,10 @@ class AgendaEsi(http.Controller):
             "end": event.end_datetime
         }
 
-    @http.route('/api/events/<string:login>', auth='public')
+    @http.route('/api/events', auth='public')
     def index(self, **kw):
-        # TODO: search the event in which the current user is an attendee and
-        # having starting in the future
         current_date = str(datetime.now())
-        values = dict(kw)
-        user = http.request.env['res.users'].search(
-            [('login', '=', values['login']), ])
-
-        result = http.request.env['agenda_esi.event'].search(
-            ['&', ('start_datetime', '>=', current_date),
-                (user.partner_id, 'in', 'attendees.ids'), ])
+        result = http.request.env['agenda_esi.event'].search([('start_datetime', '>=', current_date)])
         events = []
         for e in result:
             events.append(self.event_to_dictionnary(e))
