@@ -28,4 +28,4 @@ class TestAgenda(TransactionCase):
         self.assertEqual(action["view_mode"], 'calendar')
         self.assertEqual(action["res_model"], 'agenda_esi.event')
         self.assertEqual(action["context"]["default_agenda_id"], agenda.id)
-        self.assertEqual(action["domain"], [('id', 'in', agenda.events.ids)])
+        self.assertEqual(action["domain"], [('agenda', '=', agenda.id)])

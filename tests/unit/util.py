@@ -2,14 +2,15 @@ from datetime import datetime
 from odoo.exceptions import ValidationError
 
 
-def create_event(test, context, title, periodicity, start, end, classroom, capacity):
-    return test.env['agenda_esi.event'].with_context(context).create({
+def create_event(test, title, periodicity, start, end, classroom, capacity, agenda):
+    return test.env['agenda_esi.event'].create({
         'title': title,
         'periodicity': periodicity,
         'start_datetime': start,
         'end_datetime': end,
         'classroom': classroom,
-        'capacity': capacity
+        'capacity': capacity,
+        'agenda': agenda
     })
 
 
@@ -20,15 +21,18 @@ def attendees_to_commands(attendees):
     return commands
 
 
-def create_event_with_attendees(test, context, capacity, attendees):
-    return test.env['agenda_esi.event'].with_context(context).create({
+def create_event_with_attendees(test, capacity, attendees):
+    organizer = create_partner(test, "Logan Farci")
+    agenda = create_agenda(test, "My Agenda", organizer.id)
+    return test.env['agenda_esi.event'].create({
         'title': "Attended event",
         'periodicity': 'u',
         'start_datetime': datetime(2019, 1, 1, 12, 0, 0),
         'end_datetime': datetime(2019, 1, 1, 13, 0, 0),
         'classroom': 345,
         'capacity': capacity,
-        'attendees': attendees_to_commands(attendees)
+        'attendees': attendees_to_commands(attendees),
+        'agenda': agenda.id
     })
 
 
@@ -43,16 +47,16 @@ def create_agenda(test, title, organizer):
     })
 
 
-def assert_event_error(test, title, periodicity, start, end, classroom, capacity):
+def assert_event_error(test, title, periodicity, start, end, classroom, capacity, agenda):
     test.assertRaises(ValidationError, create_event, test,
-                      title, periodicity, start, end, classroom, capacity
-                      )
+        title, periodicity, start, end, classroom, capacity, agenda
+    )
 
 
 def assert_event_capacity_error(test, capacity, attendees):
     test.assertRaises(ValidationError, create_event_with_attendees, test,
-                      capacity, attendees
-                      )
+        capacity, attendees
+    )
 
 
 def assert_event_equal(test, record, title, periodicity, start, end, classroom, capacity):
@@ -78,7 +82,7 @@ def assert_agenda_error(test, title, organizer):
                       test, title, organizer.id)
 
 
-def create_wizard_event(event_start_date, event_end_date):
+def create_wizard_event(test, event_start_date, event_end_date):
     return test.env['agenda_esi.wizard'].create({
         'event_start_date': event_start_date,
         'event_end_date': event_end_date,
